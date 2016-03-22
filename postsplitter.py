@@ -1,19 +1,25 @@
-#  Split BAC XML files into subfiles by post
+# Split Blog Authorship Corpus XML files into subfiles by post
+# Create labels .txt file for each [filename] [sourcefilename]
 
-import re, os
+# To run from command line:
+# python postsplitter.py [source data directory] [destination data directory] [name to give labels, e.g. test]
+
+import re, os, sys
 
 #for all files in dir...
-datadir = 'blogtrain'
+datadir = sys.argv[1]
+outdir = sys.argv[2] + '/' #eg "blogtrain/blogtrainsplit/"
+name = sys.argv[3]
 
 #create labels
-labelfilename = datadir + "_labels.txt"
+labelfilename = name + "_labels.txt"
 labelfile = open(labelfilename,'w')
 labels = []
 
 for ffile in os.listdir(datadir):
     if ffile.endswith(".xml"):
         sourcefile = ffile[:-4]
-        print sourcefile
+        #print sourcefile
 
         #open file
         filename = open(datadir + "/" + ffile,'r')
@@ -30,7 +36,7 @@ for ffile in os.listdir(datadir):
             skip = len(match.group(0)) + 8 #length of date plus <post>
             body = i[skip:-11] #until </post>
             
-            outfilename = "blogtrain/blogtrainsplit/" + sourcefile + str(c) + ".txt"
+            outfilename = outdir + sourcefile + str(c) + ".txt"
             outfile = open(outfilename,'w')
             outfile.write(body)
             outfile.close()
