@@ -4,7 +4,7 @@ from uniquefeatures import avgwordlength, avgsentlength
 from numpy import mean
 from collections import defaultdict
 
-infile = open('train70_wordlen.txt','r')
+infile = open('train70_wordlen_2.csv','r')
 totwlraw = infile.readlines()
 infile.close()
 
@@ -12,7 +12,7 @@ totwl = []
 for i in totwlraw:
     totwl.append(float(i[:-1]))
 
-infile = open('train70_sentlen.txt','r')
+infile = open('train70_sentlen_2.csv','r')
 totslraw = infile.readlines()
 infile.close
 
@@ -20,7 +20,7 @@ totsl = []
 for i in totslraw:
     totsl.append(float(i[:-1]))
 
-infile = open('train70_all-freqs_labeled.csv')
+infile = open('train70_all-freqs_2_smoothed_avg_2col.csv','r')
 allfreqraw = infile.readlines()
 infile.close()
 
@@ -32,6 +32,10 @@ for row in allfreqraw:
 infile = open('testdoc.txt','r')
 doc = infile.read().decode('utf-8','ignore').split()
 infile.close()
+#not properly tokenized!!!!! ------------------------------
+
+#Document length
+print 'Document length: %d words' % len(doc)
 
 #Average word lengths
 totwlavg = mean(totwl)

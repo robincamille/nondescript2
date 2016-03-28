@@ -27,7 +27,7 @@ top10000 = infile.readlines()
 infile.close()
 
 def top10k(text): #currently top10000
-    """Returns array of frequencies for only top 10,000 words in English (OED)"""
+    """Returns words, array of frequencies for only top 10,000 (9,989 deduped) words in English (OED)"""
     #text = text.split()
     top10kdict = {}
     for word in top10000:
@@ -38,9 +38,29 @@ def top10k(text): #currently top10000
         if word in top10kdict:
             top10kdict[word] += 1
     top10kfreqs = []
+    top10kwords = []
     for key, value in sorted(top10kdict.items()):
+        top10kwords.append(key)
         top10kfreqs.append(value/float(len(text)))
-    return top10kfreqs # [0.03731343283582089, 0.007462686567164179,...]
+    return top10kwords, top10kfreqs # [0.03731343283582089, 0.007462686567164179,...]
+
+def top10kcounts(text): #currently top10000
+    """Returns words, array of counts for only top 10,000 (9,989 deduped) words in English (OED)"""
+    #text = text.split()
+    top10kdict = {}
+    for word in top10000:
+        top10kdict[word[:-1]] = 0 # {'other': 0, 'take': 0, ...}
+        
+    for word in text:
+        word = word.lower()
+        if word in top10kdict:
+            top10kdict[word] += 1
+    top10kcounts = []
+    top10kwords = []
+    for key, value in sorted(top10kdict.items()):
+        top10kwords.append(key)
+        top10kcounts.append(value)
+    return top10kwords, top10kcounts # [0.03731343283582089, 0.007462686567164179,...]
 
 def avgwordlength(text):
     """Returns average word length in a text (float)"""
