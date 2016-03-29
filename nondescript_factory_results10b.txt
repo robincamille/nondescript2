@@ -1,0 +1,216 @@
+
+-----------------------------------------------
+100812.female.26.Architecture.Aries.xml
+0.738827525761		<Blog>    <date>23,J
+0.751020383274		the authentic Thai t
+0.747261809388		activities in Singap
+0.804169450059		desk. It won't look 
+0.801458892048		:> We were all chatt
+0.77318166707		friendliness, and we
+1.0		the restaurant manag
+---total average: 0.8022742468
+
+*********************************
+0.732778184405		<Blog>    <date>23,J
+0.742572724395		the authentic Thai t
+0.733097244674		activities in Singap
+0.793251357038		desk. It won't look 
+0.79218776142		:> We were all chatt
+0.763135121211		friendliness, and we
+1.0		the restaurant manag
+---new average: 0.793860341877
+
+-----------------------------------------------
+105748.female.26.Student.Scorpio.xml
+0.806075295612		<Blog>        <date>
+0.836505002124		and everything..&nbs
+0.834268465018		shopping, art, etc. 
+0.852479995547		another email accoun
+0.860325733078		Mozilla  is here!  D
+0.840284140066		refrigerator. Anyway
+0.874508485112		need to show some co
+1.0		this up from The Lap
+---total average: 0.86305588957
+
+*********************************
+0.781721977231		<Blog>        <date>
+0.817486471297		and everything..&nbs
+0.81556933665		shopping, art, etc. 
+0.835302344589		another email accoun
+0.845047984114		Mozilla  is here!  D
+0.817696909082		refrigerator. Anyway
+0.855329184649		need to show some co
+1.0		this up from the lap
+---new average: 0.846019275952
+
+-----------------------------------------------
+106651.male.25.indUnk.Leo.xml
+0.95095952041		<Blog>      <date>01
+0.963142150983		memories and the bea
+0.936661543916		(forget Kyle likes "
+0.905784216081		</post>    <date>01,
+0.969340182689		timepiece  and I cam
+0.956943079775		</post>    <date>01,
+1.0		years.  I first blog
+---total average: 0.954690099122
+
+*********************************
+0.93982608969		<Blog>      <date>01
+0.950894133439		memories and the bea
+0.923098197564		(forget Kyle likes "
+0.894393317497		</post>    <date>01,
+0.953519658687		timepiece  and I cam
+0.945861104246		</post>    <date>01,
+1.0		years. i first blogg
+---new average: 0.943941785875
+
+-----------------------------------------------
+106738.male.25.Internet.Leo.xml
+0.819641665643		<Blog>    <date>02,A
+0.842051508869		seeking to be all co
+0.782862399037		all manner of softwa
+0.801132099807		my sister on Now (Th
+0.840098886679		clothes, no sunglass
+0.845223064792		again this year. I a
+1.0		it was luverly, only
+---total average: 0.847287089261
+
+*********************************
+0.814002700916		<Blog>    <date>02,A
+0.836695371795		seeking to be all co
+0.77819602515		all manner of softwa
+0.80279675146		my sister on Now (Th
+0.840393652101		clothes, no sunglass
+0.844535644928		again this year. I a
+1.0		it  *** cost ***  lu
+---new average: 0.845231449479
+
+-----------------------------------------------
+114645.male.17.Student.Virgo.xml
+0.838598218716		<Blog>      <date>25
+0.872752635809		<date>11,June,2003</
+0.838581446943		Rakbatija's head: al
+0.860217380807		President. So leps r
+0.870232583263		List five things you
+0.889295996421		the world that it wa
+1.0		you get an edge in y
+---total average: 0.881382608851
+
+*********************************
+0.823601860089		<Blog>      <date>25
+0.856624360656		<date>11,June,2003</
+0.828449610237		Rakbatija's head: al
+0.84913190122		President. So leps r
+0.852518415883		List five things you
+0.85994866491		the world that it wa
+1.0		you get an  *** bord
+---new average: 0.867182116142
+
+-----------------------------------------------
+11762.female.25.Student.Aries.xml
+0.629060300492		<Blog>    <date>26,M
+0.653599174184		the story of my retu
+0.53733112354		difficult, because I
+0.544445582369		thoughts out of my m
+0.574489596299		country. I car-pool 
+0.554247193158		surface, eventual bi
+1.0		my life's blood.  I 
+---total average: 0.641881852863
+
+*********************************
+0.620370315635		<Blog>    <date>26,M
+0.644501787771		the story of my retu
+0.52648133385		difficult, because I
+0.536114416251		thoughts out of my m
+0.570390097656		country. I car-pool 
+0.552217383718		surface, eventual bi
+1.0		my life's blood. i a
+---new average: 0.63572504784
+
+-----------------------------------------------
+123532.male.39.Advertising.Aries.xml
+0.634430394045		<Blog>    <date>13,M
+0.677870317163		authority, however, 
+0.550729560009		yesterday's Augusta 
+0.706257666155		Vote Bush! George W.
+0.662994063018		</post>    <date>31,
+0.667055136001		way, and last night 
+1.0		move.   But I gotta 
+---total average: 0.699905305199
+
+*********************************
+0.638229605488		<Blog>    <date>13,M
+0.67582410483		authority, however, 
+0.552343484664		yesterday's Augusta 
+0.712868176852		Vote Bush! George W.
+0.661691716729		</post>    <date>31,
+0.662309006387		way, and last night 
+1.0		move. but i gotta  *
+---new average: 0.700466584993
+
+-----------------------------------------------
+132894.female.26.indUnk.Aries.xml
+0.901067160956		<Blog>    <date>16,M
+0.866425982723		your slick little pe
+0.878113018996		pieces in your head.
+0.835924384562		end it won't keep me
+0.88282568346		their flashing blue 
+0.895840494288		only pain, and in hi
+0.911043219163		you see.  Sometimes 
+1.0		the truth that bound
+---total average: 0.896404993018
+
+*********************************
+0.89061882548		<Blog>    <date>16,M
+0.862225406556		your slick little pe
+0.869999394409		pieces in your head.
+0.828358692703		end it won't keep me
+0.87144068103		their flashing blue 
+0.888530813084		only pain, and in hi
+0.908052479671		you see.  Sometimes 
+1.0		the  *** truth ***  
+---new average: 0.889903286617
+
+-----------------------------------------------
+135888.male.23.Banking.Libra.xml
+0.827858626206		<Blog>    <date>28,J
+0.84723963097		checked the office  
+0.839912127073		Conception of the Vi
+0.806279259222		<post>              
+0.866130696116		</post>    <date>23,
+0.866924179686		find a layout that s
+1.0		sitting around doing
+---total average: 0.864906359896
+
+*********************************
+0.818647173439		<Blog>    <date>28,J
+0.832575431665		checked the office  
+0.830765596854		Conception of the Vi
+0.802532765373		<post>              
+0.860421660267		</post>    <date>23,
+0.860532871029		find a layout that s
+1.0		sitting  *** about *
+---new average: 0.857925071232
+
+-----------------------------------------------
+15365.female.34.indUnk.Cancer.xml
+0.874227561157		<Blog>      <date>12
+0.868526833279		</post>    <date>03,
+0.904704170612		yourself to feel vul
+0.892299614089		urlLink All things m
+0.888476332081		recognized its ripen
+0.908877132045		Scientists think pla
+0.914531411749		don't know where to 
+1.0		of freedom in your o
+---total average: 0.906455381877
+
+*********************************
+0.869078019397		<Blog>      <date>12
+0.863044813821		</post>    <date>03,
+0.899055189121		yourself to feel vul
+0.89084526309		urlLink All things m
+0.882728030621		recognized its ripen
+0.907942507163		Scientists think pla
+0.910387675895		don't know where to 
+1.0		of freedom in your o
+---new average: 0.902885187388
