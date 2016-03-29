@@ -12,6 +12,12 @@ from nltk import word_tokenize as tok
 ##doc = filename.read()
 ##filename.close()
 #text = tok(doc)
+##
+##doc2f = open('testdoc1b.txt','r')
+##doc2 = doc2f.read()
+##doc2f.close()
+
+##doc2non = open('testdoc1b_nondescripted.txt','w')
 
 phrases = ['I think', 'It seems to me', 'You know', 'If you know what I mean', \
            'Like', 'However', 'So be it', 'It is what it is', 'Really', \
@@ -33,10 +39,10 @@ def main(text):
         syn = wn.synsets(w)
         if len(w) < 3:
             textprint.append(w)
-        elif 2 < len(syn) < 5:
+        elif 2 < len(syn) < 15:
             s = randint(0,len(syn)-1)
             w2 = syn[s].lemma_names[0]
-            w2 = '***' + syn[s].lemma_names[0] + '*** (' + w + ')'
+            w2 = ' *** ' + syn[s].lemma_names[0] + ' *** '#(' + w + ')'
             textprint.append(w2)
         else:
             textprint.append(w)
@@ -45,3 +51,7 @@ def main(text):
 
 #print ' '.join(textprint)
 #print main(doc)
+
+##doc2non.write(main(doc2))
+##
+##doc2non.close()

@@ -4,15 +4,17 @@ from uniquefeatures import avgwordlength, avgsentlength
 from numpy import mean
 from collections import defaultdict
 
-infile = open('train70_wordlen_2.csv','r')
+#Set up word length calculator
+infile = open('train70long_wordlen_2.csv','r')
 totwlraw = infile.readlines()
 infile.close()
 
 totwl = []
 for i in totwlraw:
     totwl.append(float(i[:-1]))
-
-infile = open('train70_sentlen_2.csv','r')
+    
+#Set up sentence length calculator
+infile = open('train70long_sentlen_2.csv','r')
 totslraw = infile.readlines()
 infile.close
 
@@ -20,16 +22,18 @@ totsl = []
 for i in totslraw:
     totsl.append(float(i[:-1]))
 
-infile = open('train70_all-freqs_2_smoothed_avg_2col.csv','r')
+#Set up word frequency compare-er
+    #File from 70 authors' documents
+infile = open('train70long_all-freqs_2_smoothed_avg_2col.csv','r')
 allfreqraw = infile.readlines()
 infile.close()
 
 allfreq = {}
 for row in allfreqraw:
     row = row.split(',')
-    allfreq[row[0]] = float(row[1])
+    allfreq[row[0][1:-1]] = float(row[1]) #row[0] is 'aaron' hence [1:-1]
     
-infile = open('testdoc.txt','r')
+infile = open('testdoc2.txt','r')
 doc = infile.read().decode('utf-8','ignore').split()
 infile.close()
 #not properly tokenized!!!!! ------------------------------
@@ -79,9 +83,9 @@ for word in compfreq:
 
 print '\nTop words:'
 compwordssort = sorted(compwords,reverse=True)
-for i in compwordssort[:15]:
+for i in compwordssort[:25]:
     print '%15s %.2fx more frequent than average document\t(%d times)' % (i[1],i[0],i[2])
 
 
-# smallest value in all averaged word freqs in train 70:
+# smallest value in all averaged word freqs in train 70 split:
 # 0.0000000068378075535599996864288668536966536715127062961983028799295425415039062500000000000000000000

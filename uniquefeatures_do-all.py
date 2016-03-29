@@ -5,11 +5,11 @@
 
 import uniquefeatures as uf
 
-outfreq = open('train70_freqs_2.csv','w')
-outcount = open('train70_counts_2.csv','w')
-totcount = open('train70_all-counts_2.csv','w')
-outword = open('train70_wordlen_2.csv','w')
-outsent = open('train70_sentlen_2.csv','w')
+outfreq = open('train70long_freqs_2.csv','w')
+outcount = open('train70long_counts_2.csv','w')
+totcount = open('train70long_all-counts_2.csv','w')
+outword = open('train70long_wordlen_2.csv','w')
+outsent = open('train70long_sentlen_2.csv','w')
 
 totalwordlen = []
 totalsentlen = []
@@ -63,7 +63,7 @@ def doitall(docs): #must be split
         totalsentlen.append(uf.avgsentlength(text))
         c += 1
 
-datadir = '/Users/robin/Documents/Thesis_local/corpora/blogs/train70_split/' #data directory
+datadir = '/Users/robin/Documents/Thesis_local/corpora/blogs/train70/' #data directory
 infile = open('train70.txt','r')
 
 ##datadir = 'blogtrain/' #data directory
