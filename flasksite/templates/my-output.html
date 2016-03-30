@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="stylesheet" href="http://robin.town/css/style.css" />
+<style type="text/css">
+body {background-color:silver}
+</style>
+<title>NONDESCRIPT</title>
+</head>
+<body>
+<center>
+    <h1>Text, analyzed</h1>
+    <p style="text-align:left;width:80%;padding:20px;background-color:white;">
+    {% for o in output %} 
+    <span style="margin:5px;display:block">
+    {{ o }}
+    </span>
+    {% endfor %}
+    </p>
+    </center>
+</body>
+</html>
