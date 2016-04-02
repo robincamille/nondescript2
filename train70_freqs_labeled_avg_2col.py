@@ -2,26 +2,27 @@
 
 import csv
 
-outavg = open('train70_all-freqs_2_smoothed_avg_2col.csv','w')
+outavg = open('try_train_all-freqs_smoothed_avg_2col.csv','w')
+numdocs = 2977
 
 allfreqs = []
 
 c = 0
-while c < 10000:
+while c < 9989:
     allfreqs.append(0.0)
     c += 1
 
 print len(allfreqs)
 
 #collapse all rows into single summed row
-inf = open('train70_freqs_2_smoothed.csv','r')
+inf = open('train_data/train_freqs_smoothed.csv','r')
 fq = inf.readlines()
 
 words = []
 for word in fq[0].split(','): #'a','aaa','aaron',...
     words.append(word) #includes line-leading space
 
-outavg.write('\n')
+#outavg.write('\n') #included
 
 for row in fq[2:]:
     i = 0 #i will iterate through all 10k columns
@@ -39,7 +40,7 @@ for row in fq[2:]:
 
 i = 0
 for s in allfreqs:
-    s = s / 16689.0
+    s = s / float(numdocs)
     s = words[i] + ',' + str(s) + '\n' #'a',0.02404...
     outavg.write(s)
     i += 1 #gets tripped up here, last word ends in \n

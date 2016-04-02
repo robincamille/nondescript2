@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+<style type="text/css">
+body {background:cornflowerblue}
+</style>
+<title>NONDESCRIPT</title>
+</head>
+<body>
+
+    <h1>Enter text to analyze</h1>
+    <form action="." method="POST">
+<div style="float:left;width:45%;">
+
+    <h2>Paste in at least 7,000 words of your writing.</h2>
+             <textarea name="corpus" style="width:90%;height:400px;background-color:white">
+</textarea></div>
+
+<div style="float:right;width:45%;">
+<h2>Paste in the message you want to anonymize.</h2>
+         <textarea name="message" style="width:90%;height:400px;background-color:white">
+</textarea></div>
+<br/> <br/>
+        <center><input type="submit" name="my-form" value="Analyze" style="margin: 20px auto;clear:both"></center>
+    </form>
+</div>
+</body>
+</html>

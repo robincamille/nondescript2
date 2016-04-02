@@ -1,0 +1,8 @@
+1013637.male.17.RealEstate.Virgo.xml
+1795821.female.23.RealEstate.Cancer.xml
+3425335.female.37.RealEstate.Aquarius.xml
+3607908.male.15.RealEstate.Libra.xml
+3650522.male.24.RealEstate.Aries.xml
+3908329.female.24.RealEstate.Pisces.xml
+3987764.male.39.RealEstate.Aries.xml
+536510.female.24.RealEstate.Capricorn.xml

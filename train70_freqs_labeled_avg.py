@@ -2,7 +2,7 @@
 
 import csv
 
-outavg = open('train70_all-freqs_2_smoothed_avg.csv','w')
+outavg = open('train_all-freqs_smoothed_avg.csv','w')
 
 allwords = []
 
@@ -14,7 +14,7 @@ while c < 10000:
 print len(allwords)
 
 #collapse all rows into single summed row
-inf = open('train70_freqs_2_smoothed.csv','r')
+inf = open('train_freqs_smoothed.csv','r')
 fq = inf.readlines()
 
 for word in fq[0]:
@@ -37,7 +37,7 @@ for row in fq[2:]:
 ##    outtot.write(a)
 
 for s in allwords:
-    s = s / 16689.0
+    s = s / 750.0
     s = str(s) + ','
     outavg.write(s)
 

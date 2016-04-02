@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+
+
+<title>NONDESCRIPT</title>
+</head>
+<body>
+
+    <h1>Text, analyzed</h1>
+    <p>
+    {% for o in output %} 
+    <span style="margin:5px;display:block">
+    {{ o }}
+    </span>
+    {% endfor %}
+    </p>    
+    <p><strong>Original document:</strong><br/>
+    {{ repeatdoc }}
+    </p>
+
+</body>
+</html>
