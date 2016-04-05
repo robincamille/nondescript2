@@ -74,7 +74,7 @@ def my_form_post():
     printoverall.append("Your overall word length is %.2fx everyone else's average" % (avgwordlength(doc)/float(totwlavg)))
 
     #Average sent lengths
-    printcompare.append("Your message's sentence length is %.2fx your average" % (avgsentlength(message) / float(avgsentlength(corpus))))
+    printcompare.append("Your message's sentence length is %.2fx your average" % (avgsentlength(message)/float(avgsentlength(corpus))))
     totslavg = mean(totsl)
     printoverall.append("Your overall sentence length is %.2fx everyone else's average" % (avgsentlength(doc)/float(totslavg)))             
     #Top unusual words

@@ -26,7 +26,7 @@
     {% endfor %}
      </p> 
     
-    <form action="#" method="POST" style="clear:both">
+    <form action="#" method="POST" style="clear:both;min-height:600px;">
 
   <textarea name="corpus" style="display:none;">
   {{ corpus }} 
@@ -36,14 +36,21 @@
   </div>
 
 <h2>Try again?</h2>
-
-
-<p><strong>Is your similarity score above 0.7? Try to mask your writing by using different words. Suggestions for word choices are in parentheses below. 
-</strong></p>
  
-             <textarea name="message" style="width:90%;height:500px;background-color:white">
+             <textarea name="message" style="float:left;width:55%;height:500px;background-color:white">
              {{ anondoc }}
-</textarea></div>
+</textarea>
+<div style="float:right;width:40%;">
+<p><strong>Is your similarity score above 0.7? Try to mask your writing by using different words. Suggestions for word choices are in parentheses to the left. 
+</strong></p>
+<p>More suggestions:</p>
+<ul>
+<li>Try to <strong>increase</strong> sentence length. Your message's sentences are xx.xx% longer than in your writing sample, and xx.xx% the average sentence.</li>
+<li>Try to <strong>increase or decrease</strong> word length. Your words are about the same length as in your writing sample. Choose longer or shorter words.</li>
+</ul>
+</div>
+
+</div>
 
 <center><input type="submit" value="Try again" style="margin: 20px auto;clear:both"></center>
     </form>
