@@ -5,7 +5,9 @@ from uniquefeatures import avgwordlength, avgsentlength
 from numpy import mean
 from collections import defaultdict
 from sys import argv
-
+from cosinesim import sim
+from nondescript import changewords
+import toponly
 
 app = Flask(__name__)
 
@@ -13,7 +15,7 @@ app = Flask(__name__)
 def my_form():
     return render_template("compare-form.html")
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET','POST'])
 def my_form_post():
 
     corpus = request.form['corpus'] #'corpus' is the textarea name (left)
@@ -98,15 +100,26 @@ def my_form_post():
         else:
             pass
 
-    s.append('\nTop words overall:')
+    s.append('Most unusual words overall:')
     compwordssort = sorted(compwords,reverse=True)
     
     for i in compwordssort[:10]:
         s.append('%15s %4.2fx more frequent than average document\t(%d times)' % (i[1],i[0],i[2]))
 
+    anonmessage = changewords(message)
 
-    return render_template("compare-output.html", output = s, repeatdoc = docraw)
+    #Cosine similarity
+    
+    origsim = ('Similarity between this message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(message))[0,1]))
+    anonsim = ('Similarity between suggested message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(anonmessage))[0,1]))
+
+    return render_template("compare-output.html", output = s, corpus = corpus, repeatdoc = message, anondoc = anonmessage, origsim = origsim, anonsim = anonsim)
+
 
 if __name__ == '__main__':
     app.debug = True
     app.run()
+
+
+
+
