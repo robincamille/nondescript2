@@ -15,7 +15,7 @@ app = Flask(__name__)
 def my_form():
     return render_template("compare-form.html")
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=[',GET','POST'])
 def my_form_post():
 
     corpus = request.form['corpus'] #'corpus' is the textarea name (left)
@@ -111,11 +111,14 @@ def my_form_post():
     #Cosine similarity
     
     origsim = ('Similarity between this message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(message))[0,1]))
-    anonsim = ('Similarity between suggested message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(anonmessage))[0,1]))
+    #anonsim = ('Similarity between suggested message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(anonmessage))[0,1]))
 
-    return render_template("compare-output.html", output = s, corpus = corpus, repeatdoc = message, anondoc = anonmessage, origsim = origsim, anonsim = anonsim)
+    return render_template("compare-output-simple.html", output = s, corpus = corpus, repeatdoc = message, anondoc = anonmessage, origsim = origsim)
 
-
+@app.route('/', methods=['POST'])
+def my_form_post_again():
+    return 'Got it'
+    
 if __name__ == '__main__':
     app.debug = True
     app.run()

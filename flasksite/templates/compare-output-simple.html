@@ -9,6 +9,7 @@
 <body>
 
     <h1>Text, analyzed</h1>
+    <p>{{ origsim }}</p>
     <p><strong>Your writing style analysis:</strong><br/>
     {% for o in output %} 
     <span style="margin:5px;display:block">
@@ -17,28 +18,25 @@
     {% endfor %}
      </p> 
     
-    <form>
+    <form action="#" method="POST">
 
-  <div style="display:none;">
+  <textarea name="corpus" style="display:none;">
   {{ corpus }} 
+  </textarea>
+    <div id="original" style="display:none;">
+{{ repeatdoc }}
   </div>
 
 <h2>Now, let's anonymize your message.</h2>
-<p style="float:left;width:45%;">
-        <strong>Original document:</strong><br/>
-        <em>{{ origsim }}</em> <br/>
-    {{ repeatdoc }}
-    </p>
-<div style="float:right;width:45%;">
-<p><strong>Suggested anonymization:</strong><br/>
- <em>{{ anonsim }}</em> <br/>
+
+
+<p><strong>Try to mask your writing (suggestions included):</strong></p>
  
-             <textarea name="corpus" style="width:90%;height:500px;background-color:white">
-             
+             <textarea name="message" style="width:90%;height:500px;background-color:white">
              {{ anondoc }}
 </textarea></div>
 
-<center><input type="submit" name="my-form" value="See results" style="margin: 20px auto;clear:both"></center>
+<center><input type="submit" value="Try again" style="margin: 20px auto;clear:both"></center>
     </form>
 
 </body>
