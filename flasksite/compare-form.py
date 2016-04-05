@@ -22,8 +22,9 @@ def my_form_post():
     message = request.form['message'] #'message' is the textarea name (right)
 
     docraw = corpus + ' ' + message
-    doc = docraw.split() 
-    s = [] #things to print
+    doc = docraw.split()
+    printcompare = []
+    printoverall = [] #things to print: overall style
 
     #Set up word length calculator
     infile = open('train_wordlen.csv','r')
@@ -58,13 +59,24 @@ def my_form_post():
     #Document length
     #s.append('Document length: %d words' % len(doc))
 
+    #Return anonymized message
+    anonmessage = changewords(message)
+
+    #Cosine similarity
+    
+    printcompare.append('Similarity between this message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(message))[0,1]))
+    #anonsim = ('Similarity between suggested message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(anonmessage))[0,1]))
+
+
     #Average word lengths
+    printcompare.append("Your message's word length is %.2fx your average" % (avgwordlength(message)/float(avgwordlength(corpus))))
     totwlavg = mean(totwl)
-    s.append('Overall word length is %.2fx average' % (avgwordlength(doc)/float(totwlavg)))
+    printoverall.append("Your overall word length is %.2fx everyone else's average" % (avgwordlength(doc)/float(totwlavg)))
 
     #Average sent lengths
+    printcompare.append("Your message's sentence length is %.2fx your average" % (avgsentlength(message) / float(avgsentlength(corpus))))
     totslavg = mean(totsl)
-    s.append('Overall sentence length is %.2fx average' % (avgsentlength(doc)/float(totslavg)))             
+    printoverall.append("Your overall sentence length is %.2fx everyone else's average" % (avgsentlength(doc)/float(totslavg)))             
     #Top unusual words
     doccount = defaultdict(int)
     docfreq = defaultdict(int)
@@ -100,24 +112,14 @@ def my_form_post():
         else:
             pass
 
-    s.append('Most unusual words overall:')
+    printoverall.append('Most unusual words overall:')
     compwordssort = sorted(compwords,reverse=True)
     
     for i in compwordssort[:10]:
-        s.append('%15s %4.2fx more frequent than average document\t(%d times)' % (i[1],i[0],i[2]))
+        printoverall.append('%15s %4.2fx more frequent than average document\t(%d times)' % (i[1],i[0],i[2]))
 
-    anonmessage = changewords(message)
 
-    #Cosine similarity
-    
-    origsim = ('Similarity between this message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(message))[0,1]))
-    #anonsim = ('Similarity between suggested message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(anonmessage))[0,1]))
-
-    return render_template("compare-output-simple.html", output = s, corpus = corpus, repeatdoc = message, anondoc = anonmessage, origsim = origsim)
-
-@app.route('/', methods=['POST'])
-def my_form_post_again():
-    return 'Got it'
+    return render_template("compare-output-simple.html", compareoverall = printoverall, corpus = corpus, repeatdoc = message, anondoc = anonmessage, comparestats = printcompare)
     
 if __name__ == '__main__':
     app.debug = True

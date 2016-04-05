@@ -6,12 +6,19 @@
 
 <title>NONDESCRIPT</title>
 </head>
-<body>
+<body style="background:tomato">
 
     <h1>Text, analyzed</h1>
-    <p>{{ origsim }}</p>
-    <p><strong>Your writing style analysis:</strong><br/>
-    {% for o in output %} 
+    <p><strong>Analysis of writing sample and message:</strong><br/>
+    {% for c in comparestats %} 
+    <span style="margin:5px;display:block">
+    {{ c }}
+    </span>
+    {% endfor %}
+     </p> 
+    
+    <p><strong>Analysis of overall writing style:</strong><br/>
+    {% for o in compareoverall %} 
     <span style="margin:5px;display:block">
     {{ o }}
     </span>

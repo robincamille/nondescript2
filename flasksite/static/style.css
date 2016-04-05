@@ -1,6 +1,6 @@
 body {
 		background: silver;
-		max-width:1000px;
+		max-width:1200px;
 		margin:0 auto
 	}
 	
@@ -41,7 +41,7 @@ body, input, select, textarea {
 		padding:15px;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
+	h2, h3, h4, h5, h6 {
 		color: #5b5b5b;
 		font-weight: 700;
 		letter-spacing: 0.125em;
@@ -51,6 +51,15 @@ body, input, select, textarea {
 		text-align: center;
 	}
 
+	h1 {
+	color:#ffffff;
+		font-weight: 700;
+		letter-spacing: 0.125em;
+		line-height: 1.75em;
+		margin-bottom: 1em;
+		text-transform: uppercase;
+		text-align: center;
+	}
 
 /* Form */
 
