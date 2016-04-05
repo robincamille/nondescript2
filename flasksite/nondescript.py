@@ -26,21 +26,25 @@ def changewords(text):
 ##                wlist.append(w2)
 ##                if s == len(syn)-1:
 ##                    break
-            s = 0
-            wlist = ' ('
-            while s < len(syn):
-                new = syn[s].lemma_names[0]
-                if new.lower() == w:
-                    pass
-                else:
-                    if '_' in new:
-                        new = new.split('_')[0] + ' ' + new.split('_')[1]
-                    wlist += (new + ', ')
-                s += 1
+            wlist = []
+            for s in range(len(syn)-1):
+                newall = syn[s].lemma_names # ()[0] for air
+                for new in newall:
+                    if new.lower() == w:
+                        pass
+                    if new in wlist:
+                        pass
+                    else:
+                        if '_' in new:
+                            new = new.split('_')[0] + ' ' + new.split('_')[1]
+                        wlist.append(new)
+            wprint = ' ('
+            for n in wlist[1:]:
+                wprint += (n + ', ')
             if len(wlist) < 3:
                 textprint.append(w)
             else:
-                textprint.append((w.upper() + wlist[:-2] + ')'))
+                textprint.append((w.upper() + wprint[:-2] + ')'))
         else:
             textprint.append(w)
     return ' '.join(textprint)

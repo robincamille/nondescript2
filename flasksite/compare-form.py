@@ -112,11 +112,11 @@ def my_form_post():
         else:
             pass
 
-    printoverall.append('Most unusual words overall:')
+    printoverall.append('Most unusual words overall, compared with an average document:')
     compwordssort = sorted(compwords,reverse=True)
     
     for i in compwordssort[:10]:
-        printoverall.append('%15s %4.2fx more frequent than average document\t(%d times)' % (i[1],i[0],i[2]))
+        printoverall.append('%15s %4.2fx more frequent (used %d times)' % (i[1],i[0],i[2]))
 
 
     return render_template("compare-output-simple.html", compareoverall = printoverall, corpus = corpus, repeatdoc = message, anondoc = anonmessage, comparestats = printcompare)
