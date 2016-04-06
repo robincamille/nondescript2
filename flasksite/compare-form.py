@@ -45,8 +45,21 @@ def my_form_post():
         totsl.append(float(i[:-1]))
 
     #Set up word frequency compare-er
-        #File from 70 authors' documents
-    infile = open('train_all-freqs_smoothed_avg_2col.csv','r')
+    #File from 70 authors'
+        
+##    freqfiles = [open('train_all-freqs_smoothed_avg_2col.csv','r'),open('train_top1000_all-freqs_smoothed_avg_2col.csv','r'),open('train_top100_all-freqs_smoothed_avg_2col.csv','r')]
+##    for freqfile in freqfiles:
+##        freqfileraw = freqfiles.readlines()
+##        freqfile.close()
+##        
+##        allfreq = {}
+##        for row in allfreqraw:
+##            row = row.split(',')
+##            allfreq[row[0][1:-1]] = float(row[1]) #row[0] is 'aaron' hence [1:-1]
+
+
+
+    infile = open('train_top100_all-freqs_smoothed_avg_2col.csv','r')
     allfreqraw = infile.readlines()
     infile.close()
 

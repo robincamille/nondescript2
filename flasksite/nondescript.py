@@ -4,6 +4,7 @@ from random import randint
 from nltk.corpus import wordnet as wn
 from nltk import word_tokenize as tok
 
+ignore = ['will','must','there']
            
 def changewords(text):
     i = 0
@@ -13,6 +14,8 @@ def changewords(text):
         w = w.lower()
         syn = wn.synsets(w)
         if len(w) < 3:
+            textprint.append(w)
+        elif w.lower() in ignore:
             textprint.append(w)
         elif 2 < len(syn) < 8:
 ##            w2 = w
@@ -28,7 +31,7 @@ def changewords(text):
 ##                    break
             wlist = []
             for s in range(len(syn)-1):
-                newall = syn[s].lemma_names() # () for air
+                newall = syn[s].lemma_names # () for air
                 for new in newall:
                     if new.lower() == w:
                         pass
