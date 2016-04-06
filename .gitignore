@@ -4,6 +4,7 @@ allocate-data.py
 BAC_industry_labels_train-lists.py
 BAC_industry_labels.txt
 blogorig_4authors/
+blog_train-test/
 blogs_docs_all.txt
 blogs_docs_dev.txt
 blogs_docs_devtest.txt
@@ -31,6 +32,7 @@ cosinesim.pyc
 dev_labels.txt
 devtest_labels.txt
 document_clustering_k.py
+features_experimentation/
 features_all-in-one_km.py
 features_all-in-one.py
 features_new.py
