@@ -1,6 +1,4 @@
-from flask import Flask
-from flask import request
-from flask import render_template
+from flask import Flask, request, render_template
 from uniquefeatures import avgwordlength, avgsentlength
 from numpy import mean
 from collections import defaultdict
@@ -8,6 +6,7 @@ from sys import argv
 from cosinesim import sim
 from nondescript import changewords
 import toponly
+from  more_itertools import unique_everseen as dedup
 
 app = Flask(__name__)
 
@@ -26,23 +25,14 @@ def my_form_post():
     printcompare = []
     printoverall = [] #things to print: overall style
 
-    #Set up word length calculator
-    infile = open('train_wordlen.csv','r')
-    totwlraw = infile.readlines()
-    infile.close()
+##    #Set up word length calculator
+##    with open('train_wordlen.csv') as infile:
+##        totwl = [float(l[:-1]) for l in infile]
+##
+##    #Set up sentence length calculator
+##    with open('train_sentlen.csv') as infile:
+##        totsl = [float(l[:-1]) for l in infile]
 
-    totwl = []
-    for i in totwlraw:
-        totwl.append(float(i[:-1]))
-        
-    #Set up sentence length calculator
-    infile = open('train_sentlen.csv','r')
-    totslraw = infile.readlines()
-    infile.close()
-
-    totsl = []
-    for i in totslraw:
-        totsl.append(float(i[:-1]))
 
     #Set up word frequency compare-er
     #File from 70 authors'
@@ -58,11 +48,8 @@ def my_form_post():
 ##            allfreq[row[0][1:-1]] = float(row[1]) #row[0] is 'aaron' hence [1:-1]
 
 
-
-    infile = open('train_top100_all-freqs_smoothed_avg_2col.csv','r')
-    allfreqraw = infile.readlines()
-    infile.close()
-
+    with open('train_top100_all-freqs_smoothed_avg_2col.csv') as infile:
+        allfreqraw = [l for l in infile]
     allfreq = {}
     for row in allfreqraw:
         row = row.split(',')
@@ -77,31 +64,40 @@ def my_form_post():
 
     #Cosine similarity
     
-    printcompare.append('Similarity between this message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(message))[0,1]))
-    #anonsim = ('Similarity between suggested message and original writing sample: %.3f' % (sim(toponly.top(corpus),toponly.top(anonmessage))[0,1]))
+    printcompare.append('Similarity between this message and original writing sample (10k words): %.3f'\
+                        % (sim(toponly.top(corpus,10000),toponly.top(message,10000))[0,1]))
+    printcompare.append('Similarity between this message and original writing sample (1k words): %.3f' \
+                        % (sim(toponly.top(corpus,1000),toponly.top(message,1000))[0,1]))
+    printcompare.append('Similarity between this message and original writing sample (100 words): %.3f'   \
+                        % (sim(toponly.top(corpus,100),toponly.top(message,100))[0,1]))
+    #anonsim = ('Similarity between suggested message and original writing sample: %.3f' \
+    #   % (sim(toponly.top(corpus),toponly.top(anonmessage))[0,1]))
 
 
     #Average word lengths
-    printcompare.append("Your message's word length is %.2fx your average" % (avgwordlength(message)/float(avgwordlength(corpus))))
-    totwlavg = mean(totwl)
-    printoverall.append("Your overall word length is %.2fx everyone else's average" % (avgwordlength(doc)/float(totwlavg)))
+    printcompare.append("Your message's word length is %.2fx your average" \
+                        % (avgwordlength(message.split())/avgwordlength(corpus.split())))
+    #totwlavg = mean(totwl)
+    printoverall.append("Your overall word length is %.2fx everyone else's average"  \
+                        % (avgwordlength(doc)/6.8916756214142039))
 
     #Average sent lengths
-    printcompare.append("Your message's sentence length is %.2fx your average" % (avgsentlength(message)/float(avgsentlength(corpus))))
-    totslavg = mean(totsl)
-    printoverall.append("Your overall sentence length is %.2fx everyone else's average" % (avgsentlength(doc)/float(totslavg)))             
+    printcompare.append("Your message's sentence length is %.2fx your average" \
+                        % (avgsentlength(message)/avgsentlength(corpus)))
+    #totslavg = mean(totsl)
+    printoverall.append("Your overall sentence length is %.2fx everyone else's average" \
+                        % (avgsentlength(doc)/104.33064342040956))             
     #Top unusual words
     doccount = defaultdict(int)
     docfreq = defaultdict(int)
 
     #print 'Term counting'
     for word in doc:
-        word = word.lower()
-        doccount[word] += 1 #term count
+        doccount[word.lower()] += 1 #term count
 
     #print 'Term frequencies'
-    for word in doccount:
-        docfreq[word] = doccount[word] / float(len(doc)) #term frequency
+    for word in doccount: 
+        docfreq[word] = doccount[word] / float(len(doccount)) #term frequency
 
     #print 'Comparing to all docs'
     compfreq = defaultdict(list)
@@ -132,7 +128,12 @@ def my_form_post():
         printoverall.append('%15s %4.2fx more frequent (used %d times)' % (i[1],i[0],i[2]))
 
 
-    return render_template("compare-output-simple.html", compareoverall = printoverall, corpus = corpus, repeatdoc = message, anondoc = anonmessage, comparestats = printcompare)
+    return render_template("compare-output-simple.html", \
+                           compareoverall = printoverall, \
+                           corpus = corpus, \
+                           repeatdoc = message, \
+                           anondoc = anonmessage, \
+                           comparestats = printcompare)
     
 if __name__ == '__main__':
     app.debug = True

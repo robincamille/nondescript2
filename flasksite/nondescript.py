@@ -31,7 +31,7 @@ def changewords(text):
 ##                    break
             wlist = []
             for s in range(len(syn)-1):
-                newall = syn[s].lemma_names # () for air
+                newall = syn[s].lemma_names() # () for air
                 for new in newall:
                     if new.lower() == w:
                         pass

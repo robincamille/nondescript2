@@ -4,6 +4,7 @@
 from nltk import FreqDist
 from math import log
 import nltk.data
+from  more_itertools import unique_everseen as dedup
 sentsplitter = nltk.data.load('tokenizers/punkt/english.pickle')
 #tokenizer does not handle periods or ellipses well
 
@@ -63,21 +64,16 @@ def top10kcounts(text): #currently top10000
     return top10kwords, top10kcounts # [0.03731343283582089, 0.007462686567164179,...]
 
 def avgwordlength(text):
-    """Returns average word length in a text (float)"""
+    """Returns average word length in a text (float). Text must be a list."""
     if len(text) == 0:
-        return 0
+        return 0.0
     else:
-        lowtext = lowertext(text)  
-        textfreq = getfreq(lowtext)
-        words = textfreq.keys() #dedupe
-        totalchars = 0
-        for s in words: #may include some punctuation
-            totalchars = totalchars + len(s)
-        textlength = len(words)
-        return totalchars / float(textlength)
+        words = list(dedup(text))
+        totchars = len(''.join(words))
+        return totchars / float(len(words))
 
 def avgsentlength(text):
-    """Returns average sentence length in a text, in chars (float)"""
+    """Returns average sentence length in a text, in chars (float). Text must be a list."""
     textstring = ' '.join(text)
     sents = sentsplitter.tokenize(textstring)
     totalsentlength = 0
@@ -86,8 +82,7 @@ def avgsentlength(text):
     else:
         for s in sents:
             totalsentlength = totalsentlength + len(s) #length in chars
-        numsents = len(sents)
-        return totalsentlength / float(numsents)
+        return totalsentlength / float(len(sents))
 
 ##filename = open('blogtrain/890034.female.23.indUnk.Scorpio43.txt','r')
 ##text = filename.read().split()
