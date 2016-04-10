@@ -8,7 +8,17 @@
 </head>
 <body style="background:tomato">
 
-    <h1>Analysis of your writing</h1>
+<h1>Analysis of your writing</h1>
+
+    <p style="width:100%;"><strong>Compared to 15 random authors' documents in our background corpus, was your message still classified as yours?</strong><br/>
+    {% for c in classifystats %} 
+    <span style="margin:5px;display:block">
+    {{ c }}
+    </span>
+    {% endfor %}
+     </p> 
+     
+    
     <p style="width:45%;float:left"><strong>Analysis of your writing sample and message</strong><br/>
     <em>Low similarity score: 0.4. High similarity score: 1.0.</em><br/>
     {% for c in comparestats %} 

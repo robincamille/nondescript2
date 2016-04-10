@@ -6,7 +6,11 @@ from sys import argv
 from cosinesim import sim
 from nondescript import changewords
 import toponly
-from  more_itertools import unique_everseen as dedup
+from more_itertools import chunked, unique_everseen as dedup
+from sklearn.naive_bayes import GaussianNB
+from sklearn.externals import joblib
+from random import randint
+from bowmaker import bowArray
 
 app = Flask(__name__)
 
@@ -22,8 +26,9 @@ def my_form_post():
 
     docraw = corpus + ' ' + message
     doc = docraw.split()
-    printcompare = []
+    printcompare = [] #things to print: style vs. all train documents
     printoverall = [] #things to print: overall style
+    printclassify = [] #things to print: classifier output
 
 ##    #Set up word length calculator
 ##    with open('train_wordlen.csv') as infile:
@@ -99,6 +104,72 @@ def my_form_post():
     for word in doccount: 
         docfreq[word] = doccount[word] / float(len(doccount)) #term frequency
 
+
+    #compare to X random authors
+    #set up 2 lists of documents for on-the-fly train/test
+    otherauths = []
+    comparedocs = [] 
+    comparedocspostanon = []
+    targets = []
+    listdir = '/Users/robin/Documents/Thesis_local/corpora/blogs/train/'
+    while len(otherauths) < 15: #number of authors to compare to
+        with open('train_above700Kbytes.txt') as listauths:
+            allauths = listauths.readlines()
+            auth = allauths[randint(0,len(allauths)-1)]
+            if auth in otherauths:
+                pass
+            else:
+                otherauths.append(auth[:-1])
+
+    authcount = 0
+
+    for a in otherauths:
+        with open(listdir + a) as fulltext:
+            fulltext = fulltext.read().split()
+            fulltextdocs = chunked(fulltext,7000)
+            fulltextdocs = list(fulltextdocs)
+            comparedocs.append(toponly.top(' '.join(fulltextdocs[0]),1000))
+            comparedocs.append(toponly.top(' '.join(fulltextdocs[1]),1000))
+            comparedocspostanon.append(toponly.top(' '.join(fulltextdocs[2]),1000))
+            comparedocspostanon.append(toponly.top(' '.join(fulltextdocs[3]),1000))
+            targets.append(authcount)
+            targets.append(authcount)
+            authcount += 1
+
+    #set up doc lists and targets
+    anontarget = targets[-1] + 1
+    comparedocs.append(toponly.top(corpus,1000))
+    comparedocspostanon.append(toponly.top(corpus,1000))
+    
+    targets.append(anontarget)
+
+    comparedocs.append(toponly.top(message,1000))
+    comparedocspostanon.append(toponly.top(anonmessage,1000))
+    targets.append(anontarget)
+
+    bow = bowArray(comparedocs).toarray()
+    bowpostanon = bowArray(comparedocspostanon).toarray()
+
+    #train classifier on original text
+    gnb = GaussianNB()
+    preds = gnb.fit(bow, targets).predict(bow)
+    score = 'Score: %f' % gnb.score(bow,targets)
+    if preds[-1] == anontarget:
+        printclassify.append("Original document is classified as yours.")
+    else:
+        printclassify.append("Original document successfully anonymized.")
+    classif = joblib.dump(gnb,'useclassifier') #save classifier
+
+    #use trained classifier on new text
+    gnbtest = joblib.load(classif[0]) #must have saved a classifier previously
+    predstest = gnbtest.fit(bowpostanon,targets).predict(bowpostanon)
+    scoretest = 'Score: %f' % gnbtest.score(bowpostanon,targets)
+    if preds[-1] == anontarget:
+        printclassify.append("Anonymized document is still classified as yours.")
+    else:
+        printclassify.append("Anonymized document successfully anonymized.")
+
+
     #print 'Comparing to all docs'
     compfreq = defaultdict(list)
     for word in docfreq:
@@ -133,7 +204,8 @@ def my_form_post():
                            corpus = corpus, \
                            repeatdoc = message, \
                            anondoc = anonmessage, \
-                           comparestats = printcompare)
+                           comparestats = printcompare, \
+                           classifystats = printclassify)
     
 if __name__ == '__main__':
     app.debug = True
