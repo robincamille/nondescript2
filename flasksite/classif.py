@@ -13,7 +13,7 @@ def bowArray(docs):
 
 def tfidf(docs):
     '''tfidfer(documentList) -> converts collection of documents to tf*idf features matrix'''
-    tfidfer = TfidfVectorizer(min_df=1,stop_words=None,smooth_idf=False)
+    tfidfer = TfidfVectorizer(min_df=1,stop_words=None,smooth_idf=True)
     alltexts = []
     for doc in docs:
         alltexts.append(doc)

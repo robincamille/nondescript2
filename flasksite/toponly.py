@@ -12,8 +12,8 @@ with open('top100.txt') as top100file:
     top100raw = top100file.readlines()
     top100 = [i[:-1] for i in top100raw]
 
-def top(fulltext,howmany):
-    """Returns a given text with only the words in the top 100, 1000, or 10,000 words in English."""
+def top(fulltext, howmany = None):
+    """Returns a given text with only the words in the top 100, 1000, or 10,000 words in English, or all words (default)."""
     if howmany == 10000:
         top = [w for w in fulltext.lower().split() if w in top10k]
         return ' '.join(top)
@@ -23,4 +23,6 @@ def top(fulltext,howmany):
     if howmany == 100:
         top = [w for w in fulltext.lower().split() if w in top100]
         return ' '.join(top)
+    if howmany == None:
+        return fulltext
 
