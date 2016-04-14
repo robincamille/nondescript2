@@ -39,7 +39,8 @@ def changewords(text):
                         pass
                     else:
                         if '_' in new:
-                            new = new.split('_')[0] + ' ' + new.split('_')[1]
+                            new = new.split('_')
+                            new = ' '.join(new)
                         wlist.append(new)
             wprint = ' ('
             for n in wlist[1:]:

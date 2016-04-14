@@ -91,7 +91,7 @@ def my_form_post():
 
     #compare to X random authors
     printclassify = [i for i in classifydocs('/Users/robin/Documents/Thesis_local/corpora/blogs/train/',\
-                                             'train_above700Kbytes.txt',\
+                                             'train_above280Kbytes.txt',\
                                              docraw,\
                                              message,\
                                              #anonmessage,\
