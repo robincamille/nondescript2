@@ -7,16 +7,20 @@ from nltk import word_tokenize as tok
 ignore = ['will','must','there']
            
 def changewords(text):
+    """Returns a text with certain words (in all caps) followed by potential synonyms in parentheses"""
     i = 0
     text = text.split()
-    textprint = []
+    textprint = [] #Text will appear as so: Robin SHOUTED (shout out, cry, call...
+    luckyprint = [] #Random synonym will be chosen, as so: Robin shout out... (No tense consideration)
     for w in text: 
         w = w.lower()
         syn = wn.synsets(w)
         if len(w) < 3:
             textprint.append(w)
+            luckyprint.append(w)
         elif w.lower() in ignore:
             textprint.append(w)
+            luckyprint.append(w)
         elif 2 < len(syn) < 8:
 ##            w2 = w
 ##            s = 0
@@ -45,11 +49,16 @@ def changewords(text):
             wprint = ' ('
             for n in wlist[1:]:
                 wprint += (n + ', ')
+                r = randint(0,len(wlist)-1)
+                randword = wlist[r]
             if len(wlist) < 3:
                 textprint.append(w)
+                luckyprint.append(w)
             else:
                 textprint.append((w.upper() + wprint[:-2] + ')'))
+                luckyprint.append(randword.upper())
         else:
             textprint.append(w)
-    return ' '.join(textprint)
+            luckyprint.append(w)
+    return [' '.join(textprint), ' '.join(luckyprint)]
 

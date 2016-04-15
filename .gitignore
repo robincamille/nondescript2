@@ -1,4 +1,5 @@
 **/.DS_Store
+*.pyc
 allocate-check.py
 allocate-data.py
 BAC_industry_labels_train-lists.py

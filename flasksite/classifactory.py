@@ -5,12 +5,14 @@
 #author sample, new message). 
 #Returns textual description of testing classifier results.
 
-import toponly
+import toponly, datetime, time
 from  more_itertools import chunked
 from sklearn.naive_bayes import GaussianNB
 from sklearn.externals import joblib
 from random import randint
 from classif import tfidf
+
+timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('_%Y-%m-%d_%H-%M-%S')
 
 def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
     """Naive Bayes classifier returns classification for a given document,
@@ -107,7 +109,8 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
 ##        printclassify.append("Original document is classified as yours.")
 ##    else:
 ##        printclassify.append("Original document successfully anonymous.\n")
-    classif = joblib.dump(gnb,'useclassifier') #save classifier
+    classifiername = 'useclassifier' + timestamp
+    classif = joblib.dump(gnb,classifiername) #save classifier
     #printclassify.append(preds)
 
     #use trained classifier on new text
@@ -115,7 +118,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
     #predstest = gnbtest.fit(tfarraynew,targets).predict(tfarraynew)
     predstest = gnbtest.predict(tfarraynew)
 ##    print predstest
-    scoretest =  gnbtest.score(tfarraynew,targets)
+    scoretest =  "%.3f" % gnbtest.score(tfarraynew,targets)
     ##printclassify.append("Probability the provided message is yours: " + str(gnbtest.predict_proba(tfarraynew)[-1][-1]))
     if predstest[-2] == anontarget:
         printclassify.append("Provided document is still classified as yours.")

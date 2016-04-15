@@ -20,7 +20,16 @@ def my_form():
 def my_form_post():
 
     corpus = request.form['corpus'] #'corpus' is the textarea name (left)
-    message = request.form['message'] #'message' is the textarea name (right)
+    
+    if request.form['whichmessage'] == 'choosesuggestmessage':
+        message = request.form['suggestmessage']
+    if request.form['whichmessage'] == 'chooseluckymessage':
+        message = request.form['luckymessage']
+    if request.form['whichmessage'] == 'chooseorigmessage':
+        message = request.form['origmessage']
+        
+    
+    #message = request.form['message'] #'message' is the textarea name (right)
 
     docraw = corpus + ' ' + message
     doc = docraw.split()
@@ -42,7 +51,10 @@ def my_form_post():
     #s.append('Document length: %d words' % len(doc))
 
     #Return anonymized message
+    origmessage = message
     anonmessage = changewords(message)
+    suggestmessage = anonmessage[0] #includes synonym suggestions in parens
+    luckymessage = anonmessage[1] #randomly replaces some words with synonyms
 
     #Cosine similarity
     
@@ -120,10 +132,10 @@ def my_form_post():
         else:
             pass
 
-    printoverall.append('Most unusual words overall, compared with an average document:')
+    printoverall.append('Five most unusual words overall, compared with an average document:')
     compwordssort = sorted(compwords,reverse=True)
     
-    for i in compwordssort[:10]:
+    for i in compwordssort[:5]:
         printoverall.append('%15s %4.2fx more frequent (used %d times)' % (i[1],i[0],i[2]))
 
 
@@ -131,10 +143,17 @@ def my_form_post():
                            compareoverall = printoverall, \
                            corpus = corpus, \
                            repeatdoc = message, \
-                           anondoc = anonmessage, \
+                           suggestdoc = suggestmessage, \
+                           luckydoc = luckymessage, \
+                           origdoc = origmessage, \
                            comparestats = printcompare, \
                            classifystats = printclassify)
-    
+
+
+@app.route('/about')
+def my_form_about():
+    return render_template("compare-form-about.html")
+
 if __name__ == '__main__':
     app.debug = True
     app.run()
