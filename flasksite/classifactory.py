@@ -69,12 +69,12 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
     comparedocstest.append(toponly.top(''.join(sampletext[1]),topnum))
     comparedocstest.append(toponly.top(messagetext,topnum))
 
-##    for i in comparedocs:
-##        print i[:50]
-##    print
-##    for i in comparedocstest:
-##        print i[:50]
-##    print
+    printclassify.append('traingroup-------------')
+    for i in comparedocs:
+        printclassify.append(str(i[:50]))
+    printclassify.append('testgroup-------------')
+    for i in comparedocstest:
+        printclassify.append(str(i[:50]))
 
     
 
@@ -98,6 +98,13 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
     tfarray = tfidf(comparedocs).toarray()
     tfarraynew = tfidf(comparedocstest).toarray()
 
+    printclassify.append('traingroup-------------')
+    for i in comparedocs:
+        printclassify.append(str(i[:50]))
+    printclassify.append('testgroup-------------')
+    for i in comparedocstest:
+        printclassify.append(str(i[:50]))
+
 ##    print "Gaussian Naive Bayes Classifier"
     gnb = GaussianNB()
     preds = gnb.fit(tfarray, targets).predict(tfarray)
@@ -111,7 +118,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
 ##        printclassify.append("Original document successfully anonymous.\n")
     classifiername = 'useclassifier' + timestamp
     classif = joblib.dump(gnb,classifiername) #save classifier
-    #printclassify.append(preds)
+    printclassify.append(preds)
 
     #use trained classifier on new text
     gnbtest = joblib.load(classif[0]) #must have saved a classifier previously
@@ -125,7 +132,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
     else:
         printclassify.append("Provided document successfully anonymized for this classifier.")
     printclassify.append("Overall (testing) classifier score: " + str(scoretest))
-    #printclassify.append(predstest)
+    printclassify.append(predstest)
 
     return printclassify
 
