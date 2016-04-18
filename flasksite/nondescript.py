@@ -3,11 +3,16 @@
 from random import randint
 from nltk.corpus import wordnet as wn
 from nltk import word_tokenize as tok
+from wordfilter import Wordfilter
 
-ignore = ['will','must','there']
+wf = Wordfilter() #https://github.com/dariusk/wordfilter
+#Words that may be offensive or that have undesirable results in WordNet:
+ignore = ['will','more','must','there','john','screw','queer','crap','shit','ass','fuck','fucker','motherfucker','fucks','fucked','fucking']
            
 def changewords(text):
-    """Returns a text with certain words (in all caps) followed by potential synonyms in parentheses"""
+    """Returns two texts [T1, T2]: T1 text with certain words (in all caps) followed by
+potential synonyms in parentheses, T2 text with randomly-chosen synonyms in all caps
+that replace certain words."""
     i = 0
     text = text.split()
     textprint = [] #Text will appear as so: Robin SHOUTED (shout out, cry, call...
@@ -15,31 +20,30 @@ def changewords(text):
     for w in text: 
         w = w.lower()
         syn = wn.synsets(w)
-        if len(w) < 3:
+        if wf.blacklisted(w) == True: #do nothing with bad words
+            textprint.append(w)
+            luckyprint.append(w)
+        elif len(w) < 3:
             textprint.append(w)
             luckyprint.append(w)
         elif w.lower() in ignore:
             textprint.append(w)
             luckyprint.append(w)
         elif 2 < len(syn) < 8:
-##            w2 = w
-##            s = 0
-##            wlist = []
-            
-##            while w2.lower() == w:
-##                i = randint(0,len(syn)-1)
-##                w2 = syn[i].lemma_names[0]
-##                s += 1
-##                wlist.append(w2)
-##                if s == len(syn)-1:
-##                    break
             wlist = []
             for s in range(len(syn)-1):
-                newall = syn[s].lemma_names() # () for air
+                try:
+                    newall = syn[s].lemma_names() # () for web
+                except:
+                    newall = syn[s].lemma_names 
                 for new in newall:
-                    if new.lower() == w:
+                    if new.lower() == w: #avoid same word
                         pass
-                    if new in wlist:
+                    elif new in wlist: #avoid duplicates
+                        pass
+                    elif new[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ": #avoid names
+                        pass
+                    elif wf.blacklisted(new) == True: #avoid bad words
                         pass
                     else:
                         if '_' in new:

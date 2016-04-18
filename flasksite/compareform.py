@@ -39,7 +39,7 @@ def my_form_post():
 
 
     #Set up word frequency compare-er
-    with open('train_top100_all-freqs_smoothed_avg_2col.csv') as infile:
+    with open('train_top1000_all-freqs_smoothed_avg_2col.csv') as infile:
         allfreqraw = [l for l in infile]
     allfreq = {}
     for row in allfreqraw:
@@ -107,7 +107,7 @@ def my_form_post():
                                              docraw,\
                                              message,\
                                              #anonmessage,\
-                                             10000)]
+                                             1000)]
 
 
     #print 'Comparing to all docs'

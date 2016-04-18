@@ -29,7 +29,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
 
 ##    print "Setting up random docs for comparison"
 ##    listdir = '/Users/robin/Documents/Thesis_local/corpora/blogs/train/'
-    while len(otherauths) < 5: #number of authors to compare to
+    while len(otherauths) < 7: #number of authors to compare to
         with open(authsfile) as listauths:
             allauths = listauths.readlines()
             auth = allauths[randint(0,len(allauths)-1)]
@@ -42,7 +42,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
         with open(listdir + a) as fulltext:
             fulltext = fulltext.read().split()
             #print ' '.join(fulltext[:15])
-            fulltextdocs = chunked(fulltext,7000)
+            fulltextdocs = chunked(fulltext,7000) #7k word chunks
             fulltextdocs = list(fulltextdocs)
             comparedocs.append(toponly.top(' '.join(fulltextdocs[0]),topnum))
             comparedocs.append(toponly.top(' '.join(fulltextdocs[2]),topnum))
@@ -59,22 +59,23 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
     targets.append(anontarget)
 
     sampletext= sampletext.split()
-    sampletext = chunked(sampletext, (len(sampletext) / 2))
+    sampletext = chunked(sampletext, (len(sampletext) / 3))
     sampletext = list(sampletext)
+    
     comparedocs.append(toponly.top(' '.join(sampletext[0]),topnum))
     comparedocs.append(toponly.top(' '.join(sampletext[1]),topnum))
 ##    comparedocs.append(toponly.top(sampletext,topnum))
     
     #comparedocs.append(toponly.top(messagetextorig,topnum))
-    comparedocstest.append(toponly.top(''.join(sampletext[1]),topnum))
+    comparedocstest.append(toponly.top(' '.join(sampletext[2]),topnum))
     comparedocstest.append(toponly.top(messagetext,topnum))
 
-    printclassify.append('traingroup-------------')
-    for i in comparedocs:
-        printclassify.append(str(i[:50]))
-    printclassify.append('testgroup-------------')
-    for i in comparedocstest:
-        printclassify.append(str(i[:50]))
+##    printclassify.append('\n-------------traingroup-------------')
+##    for i in comparedocs:
+##        printclassify.append(str(i[:50]))
+##    printclassify.append('\n-------------testgroup-------------')
+##    for i in comparedocstest:
+##        printclassify.append(str(i[:50]))
 
     
 
@@ -89,36 +90,15 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
 ##        comparedocstest.append(toponly.top(message.read(),topnum))
 
 
-    with open('top10000.txt') as smoother:
-        smoothertext = smoother.read()
-        comparedocs.append(toponly.top(smoothertext,topnum))
-        comparedocstest.append(toponly.top(smoothertext,topnum))
-    targets.append(targets[-1] + 1) #first doc has all words considered, to smooth and avoid array errors
-
     tfarray = tfidf(comparedocs).toarray()
     tfarraynew = tfidf(comparedocstest).toarray()
-
-    printclassify.append('traingroup-------------')
-    for i in comparedocs:
-        printclassify.append(str(i[:50]))
-    printclassify.append('testgroup-------------')
-    for i in comparedocstest:
-        printclassify.append(str(i[:50]))
 
 ##    print "Gaussian Naive Bayes Classifier"
     gnb = GaussianNB()
     preds = gnb.fit(tfarray, targets).predict(tfarray)
-##    print preds
-##        score = gnb.score(tfarray,targets)
-##        printclassify.append("Overall training classifier score: " + str(score))
-##        printclassify.append("Probability the original message is yours: "+ str(gnb.predict_proba(tfarray)[-1][-1]))
-##    if preds[-2] == anontarget:
-##        printclassify.append("Original document is classified as yours.")
-##    else:
-##        printclassify.append("Original document successfully anonymous.\n")
     classifiername = 'useclassifier' + timestamp
     classif = joblib.dump(gnb,classifiername) #save classifier
-    printclassify.append(preds)
+#    printclassify.append(preds)
 
     #use trained classifier on new text
     gnbtest = joblib.load(classif[0]) #must have saved a classifier previously
@@ -127,35 +107,30 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = None):
 ##    print predstest
     scoretest =  "%.3f" % gnbtest.score(tfarraynew,targets)
     ##printclassify.append("Probability the provided message is yours: " + str(gnbtest.predict_proba(tfarraynew)[-1][-1]))
-    if predstest[-2] == anontarget:
-        printclassify.append("Provided document is still classified as yours.")
+    if predstest[-1] == anontarget:
+        printclassify.append("Message is still attributed to you by this classifier.")
     else:
-        printclassify.append("Provided document successfully anonymized for this classifier.")
+        printclassify.append("Message successfully anonymized for this classifier.")
     printclassify.append("Overall (testing) classifier score: " + str(scoretest))
-    printclassify.append(predstest)
+#    printclassify.append(predstest)
 
     return printclassify
 
 
-##print '100-----------------------'
+
+##compareraw = open('compare-doc.txt','r')
+##compare = compareraw.read()
+##compareraw.close()
+##
+##messageraw = open('message-doc.txt','r')
+##message = messageraw.read()
+##messageraw.close()
+##
 ##for i in classifydocs('/Users/robin/Documents/Thesis_local/corpora/blogs/train/',\
 ##                                             'train_above700Kbytes.txt',\
-##                                             'compare-doc.txt',\
-##                                             'message-doc_not.txt',\
-##                                             100):
-##    print i
-##print '1000-----------------------'
-##for i in classifydocs('/Users/robin/Documents/Thesis_local/corpora/blogs/train/',\
-##                                             'train_above700Kbytes.txt',\
-##                                             'compare-doc.txt',\
-##                                             'message-doc_not.txt',\
-##                                             1000):
-##    print i
-##print '1000-----------------------'
-##for i in classifydocs('/Users/robin/Documents/Thesis_local/corpora/blogs/train/',\
-##                                             'train_above700Kbytes.txt',\
-##                                             'compare-doc.txt',\
-##                                             'message-doc_not.txt',\
+##                                             compare,\
+##                                             message,\
 ##                                             1000):
 ##    print i
 
+ 

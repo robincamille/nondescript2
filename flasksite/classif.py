@@ -11,9 +11,16 @@ def bowArray(docs):
     bow = vecbow.fit_transform(alltexts)
     return bow
 
+with open('top10000.txt') as vocdoc:
+     voc = [w[:-1] for w in vocdoc.readlines()]
+
 def tfidf(docs):
     '''tfidfer(documentList) -> converts collection of documents to tf*idf features matrix'''
-    tfidfer = TfidfVectorizer(min_df=1,stop_words=None,smooth_idf=True)
+    tfidfer = TfidfVectorizer(vocabulary=voc, \
+                              min_df=1, \
+                              stop_words=None, \
+                              use_idf=False, \
+                              smooth_idf=True)
     alltexts = []
     for doc in docs:
         alltexts.append(doc)
