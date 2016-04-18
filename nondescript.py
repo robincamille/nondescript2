@@ -1,4 +1,6 @@
-# Adds words and phrases to text to anonymize
+# Outputs two texts:
+# changewords(text)[0] has suggestions for replacing words (human-directed).
+# changewords(text)[1] has randomly replaced words (automatic).
 
 from random import randint
 from nltk.corpus import wordnet as wn
@@ -15,25 +17,25 @@ potential synonyms in parentheses, T2 text with randomly-chosen synonyms in all 
 that replace certain words."""
     i = 0
     text = text.split()
-    textprint = [] #Text will appear as so: Robin SHOUTED (shout out, cry, call...
-    luckyprint = [] #Random synonym will be chosen, as so: Robin shout out... (No tense consideration)
+    textprint = [] #Text will appear as so: she SHOUTED (shout out, call...
+    luckyprint = [] #Random synonym will be chosen, as so: She shout out... (No tense consideration)
     for w in text: 
         w = w.lower()
         syn = wn.synsets(w)
         if wf.blacklisted(w) == True: #do nothing with bad words
             textprint.append(w)
             luckyprint.append(w)
-        elif len(w) < 3:
+        elif len(w) < 3: #do nothing with words with only a few synsets
             textprint.append(w)
             luckyprint.append(w)
-        elif w.lower() in ignore:
+        elif w.lower() in ignore: #do nothing with bad words
             textprint.append(w)
             luckyprint.append(w)
-        elif 2 < len(syn) < 8:
+        elif 2 < len(syn) < 8: #only consider words with 3-7 synsets
             wlist = []
             for s in range(len(syn)-1):
                 try:
-                    newall = syn[s].lemma_names() # () for web
+                    newall = syn[s].lemma_names() #mysterious errors
                 except:
                     newall = syn[s].lemma_names 
                 for new in newall:
@@ -46,15 +48,15 @@ that replace certain words."""
                     elif wf.blacklisted(new) == True: #avoid bad words
                         pass
                     else:
-                        if '_' in new:
-                            new = new.split('_')
+                        if '_' in new: 
+                            new = new.split('_') #multi-word expressions
                             new = ' '.join(new)
                         wlist.append(new)
-            wprint = ' ('
+            wprint = ' (' #link together the parenthetical list of suggestions
             for n in wlist[1:]:
                 wprint += (n + ', ')
                 r = randint(0,len(wlist)-1)
-                randword = wlist[r]
+                randword = wlist[r] #choose random word for luckyprint
             if len(wlist) < 3:
                 textprint.append(w)
                 luckyprint.append(w)

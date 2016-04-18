@@ -42,6 +42,8 @@ features_other.py
 flasksite/*.pyc
 flasksite/test_results/
 train_above280kbytes.txt
+test_over280kbytes.txt
+test_results/
 devtest_over280kbytes.txt
 homework1_B_weighted.py
 moveblogs.sh

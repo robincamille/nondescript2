@@ -1,4 +1,6 @@
-# considers only the words in the top 9,989, 1000, or 100 most frequently used words in English
+# considers only the words in the top 9,989,
+# 1000, or 100 most frequently used words in
+# the corpus.
 
 with open('top10000.txt') as top10kfile:
     top10kraw = top10kfile.readlines()

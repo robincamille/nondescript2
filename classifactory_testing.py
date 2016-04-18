@@ -1,11 +1,13 @@
-# Opens 10 devtest files, split into 2 parts, try out classifier
+#Opens devtest files, split into 2 parts, try out classifier.
 #Tests classifier script, classifactory.py, with devtest documents.
 #Each document is classified 30 times:
 #5 times each with the real and anonymized messages, considering
 #100-, 1000-, or 10000-word vocabulary size.
 
-#Output example:
-#1566807.female.37.Education.Gemini.xml,real,10000,attributed,0.938
+#Run on the command line.
+#Spiff up .csv output: each line should begin with the filename.
+
+#Output:
 #Filename,real/anon,100/1k/10k,(not_)attributed,classifierAccuracy
 
 
@@ -33,7 +35,7 @@ alldata = []
 def testdocset(dsample, dmessage, listdata):
     nums = [100,1000,10000]
     threelists = []
-    for n in nums[1:2]:
+    for n in nums:
         fivelists = []
         print n
         j = 0

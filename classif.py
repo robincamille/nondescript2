@@ -1,21 +1,16 @@
-#creates bag of words array for a given text
+# Creates term-frequency array for a given text.
+# Note that this is tf, not tf*idf.
 
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 
-def bowArray(docs):
-    '''bowArray(documentList) -> creates sparse bag-of-words matrix without stopwords'''
-    alltexts = []
-    for doc in docs:
-        alltexts.append(doc)
-    vecbow = CountVectorizer(min_df=1,stop_words=None)
-    bow = vecbow.fit_transform(alltexts)
-    return bow
-
+# Use only vocabulary of top 10,000 most frequent words in corpus
+# (out of the box, these scripts only consider the top 1,000,
+# but you can change that number in the classifactory.classifydocs(...) function)
 with open('top10000.txt') as vocdoc:
      voc = [w[:-1] for w in vocdoc.readlines()]
 
 def tfidf(docs):
-    '''tfidfer(documentList) -> converts collection of documents to tf*idf features matrix'''
+    '''tfidfer(documentList) -> converts collection of documents to tf matrix'''
     tfidfer = TfidfVectorizer(vocabulary=voc, \
                               min_df=1, \
                               stop_words=None, \

@@ -1,5 +1,5 @@
-#similarity between two docs
-# http://stackoverflow.com/questions/8897593/similarity-between-two-text-documents
+#Outputs a similarity score between two docs.
+#Dissimilar texts tend to score <0.4; very similar score >0.85.
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 
