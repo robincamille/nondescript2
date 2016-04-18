@@ -1,5 +1,0 @@
-100812.female.26.Architecture.Aries.xml
-1617787.male.26.Architecture.Taurus.xml
-3342597.female.27.Architecture.Aries.xml
-3503338.female.23.Architecture.Cancer.xml
-3923619.female.24.Architecture.Aries.xml

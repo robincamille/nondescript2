@@ -39,6 +39,10 @@ features_all-in-one.py
 features_new.py
 features_other-features.py
 features_other.py
+flasksite/*.pyc
+flasksite/test_results/
+train_above280kbytes.txt
+devtest_over280kbytes.txt
 homework1_B_weighted.py
 moveblogs.sh
 nondescript_factory_results_10.txt

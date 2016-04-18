@@ -1,6 +1,0 @@
-1293280.male.25.Automotive.Cancer.xml
-3178061.male.26.Automotive.Sagittarius.xml
-3480399.female.35.Automotive.Leo.xml
-3496660.male.36.Automotive.Virgo.xml
-4021645.male.37.Automotive.Leo.xml
-918871.male.17.Automotive.Leo.xml
