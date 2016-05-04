@@ -1,6 +1,6 @@
 # Nondescript 
 
-This is my **in-progress** thesis work, spring 2016. 
+This is my **very much in-progress** thesis work, spring 2016. Final code repo expected mid-May 2016.
 
 ## Proposal 
 
@@ -11,8 +11,6 @@ A person’s writing style is uniquely quantifiable and can serve reliably as a 
  
 
 ### Bibliography
-
-.
 
 * Brennan, M. R., & Greenstadt, R. (2009). Practical Attacks Against Authorship Recognition Techniques. In Twenty-First IAAI Conference. Retrieved from http://www.aaai.org/ocs/index.php/IAAI/IAAI09/paper/view/257
 
