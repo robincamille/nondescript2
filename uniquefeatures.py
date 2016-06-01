@@ -3,6 +3,7 @@
 
 from nltk import FreqDist
 from math import log
+from sources import *
 import nltk.data
 sentsplitter = nltk.data.load('tokenizers/punkt/english.pickle')
 #tokenizer does not handle periods or ellipses well
@@ -22,11 +23,11 @@ def lowertext(text):
         lowtext.append(w) 
     return lowtext
 
-infile = open('top10000.txt','r') #not stemmed
+infile = open(topcorpuswords10000,'r') #not stemmed
 top10000 = infile.readlines()
 infile.close()
 
-def top10k(text): #currently top10000
+def top10k(text): 
     """Returns words, array of frequencies for only top 10,000 (9,989 deduped) words in English (OED)"""
     #text = text.split()
     top10kdict = {}
