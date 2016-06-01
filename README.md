@@ -23,8 +23,6 @@ Questions? robincamilledavis@gmail.com (Please no code nitpicking.)
  
 ## Download & use
 
-Requires these libraries: sklearn, nltk, wordfilter, numpy, flask, more_itertools
-
 Requires a background corpus structured as a directory that contains at least 20 plain-text files, each containing at least 50,000 words and written by a single author. (I recommend the [Blog Authorship Corpus](http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm) from 2004.)
 
 1. Download all required libraries using pip: sklearn, nltk, wordfilter, numpy, flask, more_itertools.
@@ -34,13 +32,15 @@ Requires a background corpus structured as a directory that contains at least 20
 
 Main files:
 - **compareform.py** generates Flask web interface, handling input/output
-- **classifactory.py** trains and runs the classifier, using submitted writing sample/message and randomly chosen documents from the background corpus. The classifier files are stored locally as a handful of files beginning with *useclassifier_...*
+- **classifactory.py** trains and runs the classifier, using submitted writing sample/message and randomly chosen documents from the background corpus. The classifier files are stored locally as a handful of files beginning with *useclassifier...*
 - **classif.py** includes the classifier code and settings (uses sklearn)
 - **nondescript.py** outputs new versions of the message using synonym suggestions
 - **sources.py** defines where to look for the background corpus and related data files 
+- **cosinesim.py, toponly.py, uniquefeatures.py** are all used for compareform.py output (and sometimes elsewhere)
+- **data/** is where those related data files should go (sample files included)
 - **templates/** includes HTML files that Flask uses for the web interface
 - **static/** includes CSS file to style the web pages
 
 
-Released under a Creative Commons BY-NC license (attribute all uses to me and do not use for commercial purposes). Please cite my thesis. 
+Released under a Creative Commons BY-NC license (attribute all uses to me and do not use for commercial purposes). Please cite my thesis: Davis, Robin Camille (2016). *Nondescript: A Web Tool to Aid Subversion of Authorship Attribution* (master's thesis). Graduate Center, City University of New York, New York.
  
