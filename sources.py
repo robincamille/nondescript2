@@ -1,36 +1,50 @@
-# Specify the source of the training corpus here.
-# Specify averages & frequencies from background corpus used on
-# the output page.
+# Specify the source of the background corpus here, along with
+# other data files specific to the background corpus.
 
 
-backgroundcorpus = '/Volumes/ROBINDAVIS/Nondescript/train/'
-#must be directory; include trailing slash
 
-filelist = 'train_above280Kbytes.txt'
-#list of files in background corpus directory to include in
-#background corpus (you may want to exclude files under a
-#certain word lenth, like 50k words)
+backgroundcorpus = 'background_corpus/'
+#Must be a directory of plain-text files.
+#Include the trailing slash.
+#No sample corpus included with this package.
+#Recommended: Blog Authorship Corpus from 2004.
 
-topcorpuswords10000 = 'top10000.txt'
-topcorpuswords1000 = 'top1000.txt'
-topcorpuswords100 = 'top100.txt'
-#lists of the top 10k, 1k, and 100 most frequent words
+filelist = 'data/background_corpus_filenames.txt'
+#List of plain-text files in background corpus directory to include in
+#background corpus. (You may want to exclude files under a
+#certain word length, like 50k words.)
+#File must be in this format: Filename.xml\nFilename.xml\n...
+#Plaintext files can be .xml or .txt
+#Included file represents top words in the Blog Authorship
+#Corpus from 2004.
+
+topcorpuswords10000 = 'data/top10000.txt'
+topcorpuswords1000 = 'data/top1000.txt'
+topcorpuswords100 = 'data/top100.txt'
+#Lists of the top 10k, 1k, and 100 most frequent words
 #in the background corpus.
-#included file represents top words in the Blog Authorship
+#File must be in this format: a\nthe\ni\n...
+#Included files represent top words in the Blog Authorship
 #Corpus from 2004.
 
-bcfreqs = 'train_top1000_all-freqs_smoothed_avg_2col.csv'
-#frequencies of vocab words across background corpus
-#csv must be in this form: 'a',0.02345\n'able',0.00345\n...
-#included file represents top words in the Blog Authorship
+bcfreqs = 'data/vocabulary_freqs.csv'
+#Frequencies of vocab words across background corpus.
+#CSV must be in this format: 'a',0.02345\n'able',0.00345\n...
+#including single quotes around each word.
+#Included file represents top words in the Blog Authorship
 #Corpus from 2004.
 
-minfreq = 0.0000000176
-#float: frequency of a word that appears in the background corpus
-#only one time. used to smooth comparison freqs on output page.
 
-backgroundcorpusWL = 6.89168
-#float: average word length from background corpus
+# Averages & frequencies from background corpus used on
+# the output page:
 
-backgroundcorpusSL = 104.33064
-#float: average sentence length from background corpus
+minfreq = 0.000000017
+#Frequency of a word that appears in the background corpus
+#only one time. Used to smooth comparison freqs on output page.
+#Must be a float.
+
+backgroundcorpusWL = 6.89
+#Average word length from background corpus. Must be a float.
+
+backgroundcorpusSL = 104.33
+#Average sentence length from background corpus. Must be a float.
