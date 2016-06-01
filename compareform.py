@@ -5,16 +5,18 @@
 # Must fix: directory & filename in line 98 (specific to my local machine)
 
 from flask import Flask, request, render_template
-from uniquefeatures import avgwordlength, avgsentlength
 from numpy import mean
 from collections import defaultdict
 from sys import argv
+from more_itertools import chunked, unique_everseen as dedup
+
+import toponly
+from uniquefeatures import avgwordlength, avgsentlength
 from cosinesim import sim
 from nondescript import changewords
-import toponly
-from more_itertools import chunked, unique_everseen as dedup
 from random import randint
 from classifactory import classifydocs
+from sources import *
 
 app = Flask(__name__)
 
@@ -48,7 +50,7 @@ def my_form_post():
 
 
     #Set up word frequency comparison
-    with open('train_top1000_all-freqs_smoothed_avg_2col.csv') as infile:
+    with open(bcfreqs) as infile:
         allfreqraw = [l for l in infile]
     allfreq = {}
     for row in allfreqraw:
@@ -77,14 +79,14 @@ def my_form_post():
                         % (avgwordlength(message.split())/avgwordlength(corpus.split())))
     #totwlavg = mean(totwl)
     printoverall.append("Your overall word length is %.2fx everyone else's average"  \
-                        % (avgwordlength(doc)/6.8916756214142039))
+                        % (avgwordlength(doc)/backgroundcorpusWL))
 
     #Average sent lengths
     printcompare.append("Your message's sentence length is %.2fx your average" \
                         % (avgsentlength(message)/avgsentlength(corpus)))
     #totslavg = mean(totsl)
     printoverall.append("Your overall sentence length is %.2fx everyone else's average" \
-                        % (avgsentlength(doc)/104.33064342040956))
+                        % (avgsentlength(doc)/backgroundcorpusSL))
     
     #Top unusual words
     doccount = defaultdict(int)
@@ -98,11 +100,13 @@ def my_form_post():
 
     #Compare to 7 random authors in background corpus
     #Run through classifier: train & test
-    printclassify = [i for i in classifydocs('/Users/robin/Documents/Thesis_local/corpora/blogs/train/',\
-                                             'train_above280Kbytes.txt',\
+    #backgroundcorpus directory & filelist .txt file specified
+    #in sources.py
+    printclassify = [i for i in classifydocs(backgroundcorpus,\
+                                             filelist,\
                                              docraw,\
                                              message,\
-                                             1000)]
+                                             1000)] #vocab of 1000 words
 
 
     #Compare word frequencies
@@ -118,7 +122,7 @@ def my_form_post():
         if doccount[word] > 1:
             if compfreq[word][0] > compfreq[word][1]:
                 if compfreq[word][1] == 0:
-                    v = compfreq[word][1] / 0.0000000176 #min freq from train/
+                    v = compfreq[word][1] / minfreq #min freq from train/
                 else:
                     v = compfreq[word][0] / float(compfreq[word][1])
                 compwords.append([v, word, doccount[word]])

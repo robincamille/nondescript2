@@ -26,9 +26,9 @@ from nondescript import changewords
 with open('test_over280kbytes.txt') as dev:
     devs = [l[:-1] for l in dev]
     
-listdir = '/Users/robin/Documents/Thesis_local/corpora/blogs/test/'
+listdir = '/Users/robin/Documents/Thesis_local/corpora/blogs/train/'
 
-outfile = open('test_results/test_results_test40_voc-tf-smoothed_1-40_1000.csv','w')
+outfile = open('test_results/apr20_test_results_test40_voc-tf-smoothed_1-40_1000.csv','w')
 
 alldata = []
 
@@ -39,7 +39,7 @@ def testdocset(dsample, dmessage, listdata):
         fivelists = []
         print n
         j = 0
-        while j < 5:
+        while j < 5: #repeat 5 times
             newlist = list(listdata)
             newlist.append(n)
             print 'Random set', j
@@ -57,7 +57,7 @@ def testdocset(dsample, dmessage, listdata):
         
 
 doccount = 1
-for doc in devs[:40]:
+for doc in devs[:4]:
     print '\n===================', doccount, '==================='
     print doc
     testdata = []

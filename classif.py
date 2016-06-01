@@ -2,11 +2,12 @@
 # Note that this is tf, not tf*idf.
 
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sources import topcorpuswords1000
 
 # Use only vocabulary of top 10,000 most frequent words in corpus
 # (out of the box, these scripts only consider the top 1,000,
 # but you can change that number in the classifactory.classifydocs(...) function)
-with open('top10000.txt') as vocdoc:
+with open(topcorpuswords1000) as vocdoc:
      voc = [w[:-1] for w in vocdoc.readlines()]
 
 def tfidf(docs):

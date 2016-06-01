@@ -2,15 +2,17 @@
 # 1000, or 100 most frequently used words in
 # the corpus.
 
-with open('top10000.txt') as top10kfile:
+from sources import *
+
+with open(topcorpuswords10000) as top10kfile:
     top10kraw = top10kfile.readlines()
     top10k = [i[:-1] for i in top10kraw]
 
-with open('top1000.txt') as top1kfile:
+with open(topcorpuswords1000) as top1kfile:
     top1kraw = top1kfile.readlines()
     top1k = [i[:-1] for i in top1kraw]
 
-with open('top100.txt') as top100file:
+with open(topcorpuswords100) as top100file:
     top100raw = top100file.readlines()
     top100 = [i[:-1] for i in top100raw]
 

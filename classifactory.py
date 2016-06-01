@@ -33,7 +33,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 1000):
     authcount = 0
 
     # Choose other random authors from the background corpus
-    while len(otherauths) < 7: #number of authors to compare to
+    while len(otherauths) < 3: #number of authors to compare to
         with open(authsfile) as listauths:
             allauths = listauths.readlines()
             auth = allauths[randint(0,len(allauths)-1)]
