@@ -1,9 +1,5 @@
 # Nondescript 
 
-Work toward a computational linguistics thesis submitted spring 2016 by Robin Davis (robincamilledavis@gmail.com).
-=======
-This is my **very much in-progress** thesis work, spring 2016. Final code repo expected June 2016.
-
 ## Thesis
 
 Davis, Robin Camille (2016). [*Nondescript: A Web Tool to Aid Subversion of Authorship Attribution* (master's thesis)](http://academicworks.cuny.edu/gc_etds/1343/). Graduate Center, City University of New York, New York.
@@ -29,7 +25,7 @@ Questions? robincamilledavis@gmail.com (Please no code nitpicking.)
 
 Requires these libraries: sklearn, nltk, wordfilter, numpy, flask, more_itertools
 
-Requires a background corpus structured as a directory that contains at least 20 plain-text files, each containing at least 50,000 words. (I recommend the [Blog Authorship Corpus](http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm) from 2004.)
+Requires a background corpus structured as a directory that contains at least 20 plain-text files, each containing at least 50,000 words and written by a single author. (I recommend the [Blog Authorship Corpus](http://u.cs.biu.ac.il/~koppel/BlogCorpus.htm) from 2004.)
 
 1. Download all required libraries using pip: sklearn, nltk, wordfilter, numpy, flask, more_itertools.
 1. Open **sources.py**. Fill in the path of your background corpus. 
@@ -37,7 +33,11 @@ Requires a background corpus structured as a directory that contains at least 20
 1. Run **compareform.py**. This fires up Flask. Head to http://127.0.0.1:5000/ in your browser to use the web-based interface. 
 
 Main files:
-- **compareform.py** gen
+- **compareform.py** generates Flask web interface, handling input/output
+- **classifactory.py** trains and runs the classifier, using submitted writing sample/message and randomly chosen documents from the background corpus. The classifier files are stored locally as a handful of files beginning with *useclassifier_...*
+- **classif.py** includes the classifier code and settings (uses sklearn)
+- **nondescript.py** outputs new versions of the message using synonym suggestions
+- **sources.py** defines where to look for the background corpus and related data files 
 
 
 Released under a Creative Commons BY-NC license (attribute all uses to me and do not use for commercial purposes). Please cite my thesis. 
