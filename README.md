@@ -38,6 +38,8 @@ Main files:
 - **classif.py** includes the classifier code and settings (uses sklearn)
 - **nondescript.py** outputs new versions of the message using synonym suggestions
 - **sources.py** defines where to look for the background corpus and related data files 
+- **templates/** includes HTML files that Flask uses for the web interface
+- **static/** includes CSS file to style the web pages
 
 
 Released under a Creative Commons BY-NC license (attribute all uses to me and do not use for commercial purposes). Please cite my thesis. 
