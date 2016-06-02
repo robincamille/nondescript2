@@ -4,7 +4,9 @@
 
 Davis, Robin Camille (2016). [*Nondescript: A Web Tool to Aid Subversion of Authorship Attribution* (master's thesis)](http://academicworks.cuny.edu/gc_etds/1343/). Graduate Center, City University of New York, New York.
 
-(Completed for the [Computational Linguistics MA program](http://www.gc.cuny.edu/Page-Elements/Academics-Research-Centers-Initiatives/Doctoral-Programs/Linguistics/About-the-Program/Specializations/Computational-Linguistics).)
+Completed for the [Computational Linguistics MA program](http://www.gc.cuny.edu/Page-Elements/Academics-Research-Centers-Initiatives/Doctoral-Programs/Linguistics/About-the-Program/Specializations/Computational-Linguistics).
+
+[Thesis presentation](https://docs.google.com/presentation/d/14iBLsyTz6NZVXXTyR_BcFro8td0VoAhms1-hVeecuEM/edit?usp=sharing) (slides & notes): presented June 1, 2016
 
 ## About 
 
