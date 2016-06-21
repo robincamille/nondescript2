@@ -16,7 +16,7 @@ Completed for the [Computational Linguistics MA program](http://www.gc.cuny.edu/
 
 **More info:** Nondescript uses Flask to generate the web interface. Input your writing sample and the message you wish to anonymize. Every time you run Nondescript, it randomly chooses 7 authors from a given background corpus to compare your writing to. This can take up to 60 seconds. (What's it doing during this time? In machine learning terms, every time you run Nondescript, it trains a Naive Bayes classifier on your sample and some writing by the 7 random authors, *then* runs the trained classifier on your message and other writings from the 7 random authors.) On the next page, you'll see if Nondescript was able to correctly attribute your message to you, or if you were able to confuse it into thinking it was written by someone else. At the bottom of the page, you'll have another chance to revise your message. 
 
-You may get a different result every time you use Nondescript, even if you don't change your message. That's because this is a simulation of de-anonymization. In a real scenario, you may not know whose writing your anonymous message is being compared to. 
+You may get a different result every time you use Nondescript, even if you don't change your message. That's because this is a simulation of de-anonymization. In a real scenario, you may not know whose writing your anonymous message is being compared to. Moreover, you can run Nondescript multiple times as a way of cross-validating the results of the final revision of your message.
 
 Future work on this project will include a user study and a dedicated interactive website that runs Nondescript. 
 
