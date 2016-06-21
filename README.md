@@ -18,7 +18,7 @@ Completed for the [Computational Linguistics MA program](http://www.gc.cuny.edu/
 
 You may get a different result every time you use Nondescript, even if you don't change your message. That's because this is a simulation of de-anonymization. In a real scenario, you may not know whose writing your anonymous message is being compared to. Moreover, you can run Nondescript multiple times as a way of cross-validating the results of the final revision of your message.
 
-Future work on this project will include a user study and a dedicated interactive website that runs Nondescript. 
+**Future work** on this project will include a user study and a dedicated interactive public website that runs Nondescript. 
 
 Questions? robincamilledavis@gmail.com (Please no code nitpicking.) 
 
