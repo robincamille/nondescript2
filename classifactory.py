@@ -20,7 +20,7 @@ from classif import tfidf
 
 timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('_%Y-%m-%d_%H-%M-%S')
 
-def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 1000):
+def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     """Naive Bayes classifier returns classification for a given document,
     compared to another document by the same author, and 2 documents each from 7
     randomly chosen authors in the given directory. tf arrays created for (topnum)

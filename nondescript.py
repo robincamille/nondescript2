@@ -52,7 +52,7 @@ that replace certain words."""
                             new = new.split('_') #multi-word expressions
                             new = ' '.join(new)
                         wlist.append(new)
-            wprint = ' (' #link together the parenthetical list of suggestions
+            wprint = ' [[' #link together the parenthetical list of suggestions
             for n in wlist[1:]:
                 wprint += (n + ', ')
                 r = randint(0,len(wlist)-1)
@@ -61,10 +61,10 @@ that replace certain words."""
                 textprint.append(w)
                 luckyprint.append(w)
             else:
-                textprint.append((w.upper() + wprint[:-2] + ')'))
+                textprint.append((w.upper() + wprint[:-2] + ']]'))
                 luckyprint.append(randword.upper())
         else:
             textprint.append(w)
             luckyprint.append(w)
-    return [' '.join(textprint), ' '.join(luckyprint)]
+    return ['__'.join(textprint), '__'.join(luckyprint)]
 

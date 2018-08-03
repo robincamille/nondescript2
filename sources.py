@@ -3,13 +3,13 @@
 
 
 
-backgroundcorpus = 'background_corpus/'
+backgroundcorpus = '/Volumes/ROBINDAVIS/Thesis_LocalAir/corpora/train_above280kb/'
 #Must be a directory of plain-text files.
 #Include the trailing slash.
 #No sample corpus included with this package.
 #Recommended: Blog Authorship Corpus from 2004.
 
-filelist = 'data/background_corpus_filenames.txt'
+filelist = '/Users/robindavis/Desktop/nondescript/blogtrainlist.txt'
 #List of plain-text files in background corpus directory to include in
 #background corpus. (You may want to exclude files under a
 #certain word length, like 50k words.)
