@@ -66,5 +66,5 @@ that replace certain words."""
         else:
             textprint.append(w)
             luckyprint.append(w)
-    return ['__'.join(textprint), '__'.join(luckyprint)]
+    return ['__'.join(textprint), ' '.join(luckyprint)]
 
