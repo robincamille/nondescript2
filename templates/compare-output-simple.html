@@ -4,8 +4,166 @@
 <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
 
 
-<title>NONDESCRIPT</title>
+<title>NONDESCRIPT 2</title>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+  <!--<script src="{{ url_for('static',filename='easyeditform.js') }}"></script>-->
+
+
+<script> 
+
+//uses jQuery to display changeable text options from Nondescript T1
+//text format: words must be split with __ (two underscores)
+//and word options must be comma-separated within double square brackets [[like,this]]
+//altogether these are a string
+
+$(document).ready(function() {
+  console.log('javascript connected!');
+
+  //function formatText(submittedText) {
+
+
+
+    const $textDisplay = $('#textdisplay');
+    
+    const $stopWords = ["I","a","in","the"]; //sample stopwords for future feature 
+
+    let $separated = "{{ suggestdoc }}"; //pre-formatted with double-underscores and curly brax
+    let $theText = $separated.split('__'); //split on double underscore
+
+    //console.log($theText);
+    // $theText looks like this:
+    // "i", "take", "all", "of", "my", "[[tasks,project,task,labor,job,chore]]", "in", "my", "[[daily,day-by-day,day-after-day,casual,everyday]]", ...
+
+
+
+    let $wordNum = 0;
+
+    $theText.forEach(function(word) { //for each item in split string
+      $wordNum++;
+      let $wordId = "word" + $wordNum;
+      if (word.slice(0,2) === '[[') { //if it is a wordset option
+        let $wordSet = word.slice(2, word.length - 2);
+        let $newWord = $wordSet.split(',');
+        let $chosenWord = $newWord[0] + ' '; //initialize
+
+
+        //make nested span with options
+
+          // example structure: 
+          //<span class="itemhighlight">
+          //   <span class="itemoriginal">months</span> 
+          //   <span class="itemsuggestion">
+          //     <ul>
+          //       <li>a long time</li> 
+          //       <li>a while</li>
+          //     </ul>
+          //   </span>
+          // </span>
+
+
+        let $para = $('<span class="itemhighlight"></span>');
+        $para.attr("id",$wordId);
+        $para.append($('<span class="itemoriginal"></span>').text($newWord[0]));
+        let $paraList = $('<ul></ul>');
+        $newWord.forEach(function(wordoption) {
+            let option = '<li>' + wordoption + '</li>';
+            $paraList.append(option);
+          })
+        //console.log($paraList); //innerHTML is <li>intended</li><li>mean</li><li>think</li><li>destine</li><li>designate</li><li>specify</li><li>signify</li>
+        let $suggestionContainer = $('<span class="itemsuggestion"></span>');
+        $suggestionContainer.append($paraList);
+        $para.append($suggestionContainer);
+        
+        $textDisplay.append($para); //add menus to revision area
+
+      } else {
+
+        let $newWord = word + ' ';
+        $textDisplay.append($newWord);
+
+      };
+    })
+
+    // end formatting raw text
+
+    // begin making formatted text clickable w/r/t suggestions pane
+
+    
+  const $message = $('#textdisplay');
+  const $suggestions = $('#textdisplaysuggestions');
+  const $item = $('.itemhighlight');
+  const $itemSuggestion = $('.itemsuggestion');
+  const $itemInMessage = $('#message .itemhighlight');
+
+  // when clicking a word with synonyms, the syn choices appear in the small
+  // div next to the textdisplay div
+  $item.on('click', function(event) {
+
+      event.preventDefault();
+      //console.log(this.innerHTML);
+
+      let $thisItemOrig = $(this).find('.itemoriginal')[0];
+      
+      $suggestions.empty();
+      $suggestions.append(this.innerHTML);
+
+      // below must be nested because visible suggestions don't appear
+      // until the highlighted item is clicked, so there won't be anything
+      // for the function to work on
+    let $itemSuggestionSingle = $('.itemsuggestion ul li');
+
+    $itemSuggestionSingle.on('click', function(event) {
+      let $newItem = this.innerHTML;
+      $thisItemOrig.replaceWith($newItem); 
+      $suggestions.empty();
+    })
+    
+    $(this).removeClass('itemhighlight');
+    $(this).addClass('itemfinished');
+    // item remains clickable even without class
+
+
+
+    });
+
+  const $suggestMessage = $('#suggestmessagebox');
+  const $submitButton = $('#submitButton'); //form submit button
+
+  $submitButton.on('click', function(event) {
+    //make contents of #suggestmessage text input box equal to current contents of #textdisplay editable div
+    
+    //event.preventDefault(); //take this off to reinstate submit
+    let $textDisplayCurrentHTML = $('#textdisplay').html(); 
+    let $itemSuggestionSingle = $('.itemsuggestion ul li');
+    $itemSuggestionSingle.replaceWith(' '); //take out all suggestions so they are not included in re-submitted text; chosen words remain
+
+    let $textDisplayCurrentText = $('#textdisplay').text(); 
+    
+    $suggestMessage.val($textDisplayCurrentText); 
+  })
+
+  });
+
+  
+
+</script>
+
+  <style type="text/css">
+    .itemsuggestion {display:none;}
+    .itemhighlight {border-bottom:2px solid purple;white-space:pre;}
+    .itemhighlight:after, .itemfinished:after { content: " "; }
+    .itemfinished {border-bottom:2px solid silver;white-space:pre;}
+    #textdisplaysuggestions .itemsuggestion {display:block;cursor:pointer;}
+
+    #textdisplay {float:left;width:70%;height:400px;overflow:auto;background-color:white;border:1px solid gray;line-height:2em}
+    #textdisplaysuggestions {float:right;width:25%;background-color:white;min-height:200px;border:1px solid gray;}
+  </style>
+
 </head>
 <body style="background:tomato">
 
@@ -57,9 +215,19 @@
        
        <div class="content">
        <p style="margin:0">Suggestions for synonyms provided.</p>
-                       <textarea name="suggestmessage" style="float:left;width:97%;height:400px;background-color:white">
-             {{ suggestdoc }}
-</textarea>
+            <div id="textdisplay" contenteditable="true" spellcheck="false" name="suggestmessageraw">
+              
+            </div>
+
+            <div id="textdisplaysuggestionscontainer">
+              <h2>Text suggestions</h2>
+
+              <div id="textdisplaysuggestions">
+                Click an underlined word to choose from synonym replacements.
+              </div>
+            </div>
+
+            <textarea id="suggestmessagebox" name="suggestmessage" style="display: none"></textarea>
        </div> 
    </div>
     
@@ -71,7 +239,7 @@
        <p style="margin:0">Synonyms chosen at random. (Part of speech, tense, and plurality not considered.)</p>
            <textarea name="luckymessage" style="float:left;width:97%;height:400px;background-color:white">
              {{ luckydoc }}
-</textarea>
+          </textarea>
        </div> 
        </div>
        <div class="tab">
@@ -80,15 +248,13 @@
        
        <div class="content">
        <p style="margin:0">This is the message you just submitted.</p>
-           <textarea name="origmessage" style="float:left;width:97%;height:400px;background-color:white">
-             {{ origdoc }}
-</textarea>
+           <textarea name="origmessage" style="float:left;width:97%;height:400px;background-color:white">{{ origdoc }}</textarea>
        </div> 
    </div>
 
     
 </div>
-<center>    <input type="submit" value="Submit (takes a minute)"></center>
+<center>    <input id="submitButton" type="submit" value="Submit (takes a minute)"></center>
 </form>
 
  

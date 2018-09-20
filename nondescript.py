@@ -52,16 +52,17 @@ that replace certain words."""
                             new = new.split('_') #multi-word expressions
                             new = ' '.join(new)
                         wlist.append(new)
-            wprint = ' [[' #link together the parenthetical list of suggestions
+            wprint = '' #link together the parenthetical list of suggestions
+            #format (for JS): [[tasks,project,labor,job,chore]]
             for n in wlist[1:]:
-                wprint += (n + ', ')
+                wprint += (n + ',')
                 r = randint(0,len(wlist)-1)
                 randword = wlist[r] #choose random word for luckyprint
             if len(wlist) < 3:
                 textprint.append(w)
                 luckyprint.append(w)
             else:
-                textprint.append((w.upper() + wprint[:-2] + ']]'))
+                textprint.append(('[[' + w + ',' + wprint[:-1] + ']]'))
                 luckyprint.append(randword.upper())
         else:
             textprint.append(w)
