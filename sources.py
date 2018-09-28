@@ -19,7 +19,9 @@ filelist = '/Users/robindavis/Desktop/nondescript/blogtrainlist.txt'
 #Corpus from 2004.
 
 topcorpuswords10000 = 'data/top10000.txt'
-topcorpuswords1000 = 'data/top1000.txt'
+topcorpuswords5000 = 'data/top5000_plus-punct.txt'
+#topcorpuswords1000 = 'data/top1000.txt'
+topcorpuswords1000 = 'data/top1000_plus-punct.txt'
 topcorpuswords100 = 'data/top100.txt'
 #Lists of the top 10k, 1k, and 100 most frequent words
 #in the background corpus.

@@ -2,6 +2,8 @@
 # changewords(text)[0] has suggestions for replacing words (human-directed).
 # changewords(text)[1] has randomly replaced words (automatic).
 
+# New addition: sentences are split with __ as delimiter for textprint (editable area)
+
 from random import randint
 from nltk.corpus import wordnet as wn
 from nltk import word_tokenize as tok

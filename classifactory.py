@@ -11,7 +11,7 @@
 # anonymity.
 
 
-import toponly, datetime, time
+import toponly, datetime, time, re
 from  more_itertools import chunked
 from sklearn.naive_bayes import GaussianNB
 from sklearn.externals import joblib
@@ -34,7 +34,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
 
     # Choose other random authors from the background corpus
     while len(otherauths) < 3: #number of authors to compare to
-        with open(authsfile) as listauths:
+        with open(authsfile, 'rb') as listauths:
             allauths = listauths.readlines()
             auth = allauths[randint(0,len(allauths)-1)]
             if auth[:-1] in otherauths:
@@ -45,8 +45,9 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     # Each author has one long document of at least 50,000 words
     # Split this into 7,000-word non-consec chunks
     for a in otherauths:
-        with open(listdir + a) as fulltext:
+        with open(listdir + a, 'rb') as fulltext:
             fulltext = fulltext.read().split()
+            #fulltext = re.findall(r"[\w']+|[!\"#$%&\()*+,-./:;<=>?@\[\\\]^_`{|}~]",fulltext) #error:TypeError: expected string or bytes-like object
             fulltextdocs = chunked(fulltext,7000)
             fulltextdocs = list(fulltextdocs)
             comparedocs.append(toponly.top(' '.join(fulltextdocs[0]),topnum))
@@ -67,7 +68,8 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     # Sample text is split into 3 chunks; 2 > train, 1 > test
     # Message text is added to test
     sampletext= sampletext.split()
-    sampletext = chunked(sampletext, (len(sampletext) / 3))
+    #sampletext = re.findall(r"[\w']+|[!\"#$%&\()*+,-./:;<=>?@\[\\\]^_`{|}~]",sampletext)
+    sampletext = chunked(sampletext, (len(sampletext) / 3)) 
     sampletext = list(sampletext)
     
     comparedocs.append(toponly.top(' '.join(sampletext[0]),topnum))
@@ -89,11 +91,13 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     # Use trained classifier on new text, return score and message-specific report
     gnbtest = joblib.load(classif[0]) #must have saved a classifier previously
     predstest = gnbtest.predict(tfarraynew)
-    scoretest =  "%.3f" % gnbtest.score(tfarraynew,targets)
+    print predstest
+    scoretest = (gnbtest.score(tfarraynew,targets)) * 100
+    scoretest =  "%.1f" % scoretest
     if predstest[-1] == anontarget:
         printclassify.append("Message is still attributed to you by this classifier.")
     else:
         printclassify.append("Message successfully anonymized for this classifier.")
-    printclassify.append("Overall (testing) classifier score: " + str(scoretest))
+    printclassify.append("Overall (testing) classifier score: " + str(scoretest) + ' out of 100')
 
     return printclassify

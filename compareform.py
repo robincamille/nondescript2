@@ -67,12 +67,14 @@ def my_form_post():
     luckymessage = anonmessage[1] #randomly replaces some words with synonyms
 
     #Cosine similarity in vocabularies of 100, 1000, 10000 words
-    printcompare.append('Similarity between this message and original writing sample (10k words): %.3f'\
+    printcompare.append('Similarity between this message and original writing sample: %.3f'\
                         % (sim(toponly.top(corpus,10000),toponly.top(message,10000))[0,1]))
-    printcompare.append('Similarity between this message and original writing sample (1k words): %.3f' \
-                        % (sim(toponly.top(corpus,1000),toponly.top(message,1000))[0,1]))
-    printcompare.append('Similarity between this message and original writing sample (100 words): %.3f'   \
-                        % (sim(toponly.top(corpus,100),toponly.top(message,100))[0,1]))
+    # printcompare.append('Similarity between this message and original writing sample (10k words): %.3f'\
+    #                     % (sim(toponly.top(corpus,10000),toponly.top(message,10000))[0,1]))
+    # printcompare.append('Similarity between this message and original writing sample (1k words): %.3f' \
+    #                     % (sim(toponly.top(corpus,1000),toponly.top(message,1000))[0,1]))
+    # printcompare.append('Similarity between this message and original writing sample (100 words): %.3f'   \
+    #                     % (sim(toponly.top(corpus,100),toponly.top(message,100))[0,1]))
 
     #Average word lengths
     printcompare.append("Your message's word length is %.2fx your average" \
@@ -106,7 +108,7 @@ def my_form_post():
                                              filelist,\
                                              docraw,\
                                              message,\
-                                             1000)] #vocab of 1000 words
+                                             5000)] #vocab of n words
 
 
     #Compare word frequencies
@@ -125,7 +127,7 @@ def my_form_post():
                     v = compfreq[word][1] / minfreq #min freq from train/
                 else:
                     v = compfreq[word][0] / float(compfreq[word][1])
-                compwords.append([v, word, doccount[word]])
+                compwords.append([v, word, doccount[word]]) #currently 0 words? fix this
             else:
                 pass
         else:
