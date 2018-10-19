@@ -5,7 +5,6 @@
 
 
 <title>NONDESCRIPT 2</title>
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
 
 <script
   src="https://code.jquery.com/jquery-3.3.1.js"
@@ -46,27 +45,14 @@ $(document).ready(function() {
     $theText.forEach(function(word) { //for each item in split string
       $wordNum++;
       let $wordId = "word" + $wordNum;
-      if (word.slice(0,2) === '[[') { //if it is a wordset option
+      if (word.slice(0,2) === '@@') { //if it is a wordset option in top 1k words
         let $wordSet = word.slice(2, word.length - 2);
         let $newWord = $wordSet.split(',');
         let $chosenWord = $newWord[0] + ' '; //initialize
+        console.log($newWord[0]);
 
+        let $para = $('<span class="itemflag"></span>');
 
-        //make nested span with options
-
-          // example structure: 
-          //<span class="itemhighlight">
-          //   <span class="itemoriginal">months</span> 
-          //   <span class="itemsuggestion">
-          //     <ul>
-          //       <li>a long time</li> 
-          //       <li>a while</li>
-          //     </ul>
-          //   </span>
-          // </span>
-
-
-        let $para = $('<span class="itemhighlight"></span>');
         $para.attr("id",$wordId);
         $para.append($('<span class="itemoriginal"></span>').text($newWord[0]));
         let $paraList = $('<ul></ul>');
@@ -81,7 +67,28 @@ $(document).ready(function() {
         
         $textDisplay.append($para); //add menus to revision area
 
-      } else {
+      } else if (word.slice(0,2) === '[[') { //if it is a wordset option 
+        let $wordSet = word.slice(2, word.length - 2);
+        let $newWord = $wordSet.split(',');
+        let $chosenWord = $newWord[0] + ' '; //initialize
+
+        let $para = $('<span class="itemhighlight"></span>');
+
+        $para.attr("id",$wordId);
+        $para.append($('<span class="itemoriginal"></span>').text($newWord[0]));
+        let $paraList = $('<ul></ul>');
+        $newWord.forEach(function(wordoption) {
+            let option = '<li>' + wordoption + '</li>';
+            $paraList.append(option);
+          })
+        let $suggestionContainer = $('<span class="itemsuggestion"></span>');
+        $suggestionContainer.append($paraList);
+        $para.append($suggestionContainer);
+        
+        $textDisplay.append($para); //add menus to revision area
+
+      }
+      else {
 
         let $newWord = word + ' ';
         $textDisplay.append($newWord);
@@ -96,7 +103,7 @@ $(document).ready(function() {
     
   const $message = $('#textdisplay');
   const $suggestions = $('#textdisplaysuggestions');
-  const $item = $('.itemhighlight');
+  const $item = $('.itemhighlight, .itemflag');
   const $itemSuggestion = $('.itemsuggestion');
   const $itemInMessage = $('#message .itemhighlight');
 
@@ -132,7 +139,10 @@ $(document).ready(function() {
     });
 
   const $suggestMessage = $('#suggestmessagebox');
+  const $luckyMessage = $('#luckymessagebox');
+  const $origMessage = $('#origmessagebox');
   const $submitButton = $('#submitButton'); //form submit button
+
 
   $submitButton.on('click', function(event) {
     //make contents of #suggestmessage text input box equal to current contents of #textdisplay editable div
@@ -143,8 +153,11 @@ $(document).ready(function() {
     $itemSuggestionSingle.replaceWith(' '); //take out all suggestions so they are not included in re-submitted text; chosen words remain
 
     let $textDisplayCurrentText = $('#textdisplay').text(); 
-    
+    let $luckyDisplayCurrentText = $('#luckydisplay').text(); 
+    let $origDisplayCurrentText = $('#origdisplay').text(); 
     $suggestMessage.val($textDisplayCurrentText); 
+    $luckyMessage.val($luckyDisplayCurrentText);
+    $origMessage.val($origDisplayCurrentText);
   })
 
   });
@@ -155,13 +168,15 @@ $(document).ready(function() {
 
   <style type="text/css">
     .itemsuggestion {display:none;}
-    .itemhighlight {border-bottom:2px solid purple;white-space:pre;}
-    .itemhighlight:after, .itemfinished:after { content: " "; }
+    .itemhighlight {border-bottom:2px solid darkblue;white-space:pre;}
+    .itemhighlight:after, .itemfinished:after, .itemflag:after { content: " "; }
+    .itemflag {border-bottom:2px solid red;white-space:pre;}
     .itemfinished {border-bottom:2px solid silver;white-space:pre;}
     #textdisplaysuggestions .itemsuggestion {display:block;cursor:pointer;}
 
-    #textdisplay {float:left;width:70%;height:400px;overflow:auto;background-color:white;border:1px solid gray;line-height:2em}
-    #textdisplaysuggestions {float:right;width:25%;background-color:white;min-height:200px;border:1px solid gray;}
+    #textdisplay, #luckydisplay, #origdisplay {float:left;width:68%;height:360px;overflow:auto;background-color:white;border:1px solid gray;line-height:2em;padding:5px;}
+    #textdisplaysuggestionscontainer {float:right;width:27%;}
+    #textdisplaysuggestions {background-color:white;min-height:150px;border:1px solid gray;padding:5px;}
   </style>
 
 </head>
@@ -170,7 +185,7 @@ $(document).ready(function() {
     <h1><a href="/" style="color:#fff;border:0;">NONDESCRIPT</a></h1>
 
 <div style="background:#fff">
-    <p style="width:100%;text-align:center"><span style="font-weight:700;font-size:1.5em;">Results</span><br/>Compared to 7 random authors' documents in our background corpus, was your message still classified as yours?<br/><strong>
+    <p style="width:100%;text-align:center"><span style="font-weight:700;font-size:1.5em;">Results</span><br/>Compared to 5 random authors' documents in our background corpus, was your message still classified as yours?<br/><strong>
     {% for c in classifystats %} 
     <span style="margin:5px;display:block">
     {{ c }}
@@ -214,17 +229,25 @@ $(document).ready(function() {
        <label for="tab-1">Revise manually</label>
        
        <div class="content">
-       <p style="margin:0">Suggestions for synonyms provided.</p>
+       <p style="margin:0">Suggestions for synonyms provided. For the purposes of this app, all text is changed to lowercase. <span class="itemflag">Red underline</span>means these words are used to determine authorship, so you should prioritize changing these to a suggested synonym or a word(s) of your own choosing. <span class="itemhighlight">Blue underlines</span>are not used to determine authorship, but they still have synonym suggestions.</p>
             <div id="textdisplay" contenteditable="true" spellcheck="false" name="suggestmessageraw">
               
             </div>
 
             <div id="textdisplaysuggestionscontainer">
-              <h2>Text suggestions</h2>
-
+              <div id="advice">
+                <h4>Overall suggestions for you</h4>
+                {% for a in advice %} 
+                <span style="margin:5px 0;display:block">
+                {{ a }}
+                </span>
+                {% endfor %}
+              <h4>Word choice changes</h4>
+              </div>
               <div id="textdisplaysuggestions">
                 Click an underlined word to choose from synonym replacements.
               </div>
+
             </div>
 
             <textarea id="suggestmessagebox" name="suggestmessage" style="display: none"></textarea>
@@ -236,10 +259,15 @@ $(document).ready(function() {
        <label for="tab-2">I'm feeling fortuitous</label>
        
        <div class="content">
-       <p style="margin:0">Synonyms chosen at random. (Part of speech, tense, and plurality not considered.)</p>
-           <textarea name="luckymessage" style="float:left;width:97%;height:400px;background-color:white">
+       <p style="margin:0">Synonyms chosen at random, denoted by capitalization. (Part of speech, tense, and plurality not considered.)</p>
+<!--            <textarea name="luckymessage" style="float:left;width:97%;height:400px;background-color:white">
              {{ luckydoc }}
-          </textarea>
+          </textarea> -->
+          <div id="luckydisplay" contenteditable="true" spellcheck="false" name="luckymessageraw">
+              {{ luckydoc }}
+            </div>
+          <textarea id="luckymessagebox" name="luckymessage" style="display: none"></textarea>
+
        </div> 
        </div>
        <div class="tab">
@@ -247,8 +275,15 @@ $(document).ready(function() {
        <label for="tab-3">Message as submitted</label>
        
        <div class="content">
-       <p style="margin:0">This is the message you just submitted.</p>
-           <textarea name="origmessage" style="float:left;width:97%;height:400px;background-color:white">{{ origdoc }}</textarea>
+       <p style="margin:0">This is the message you just submitted. If you re-submit the message
+       below, Nondescript will compare it against different authors than before.</p>
+<!--            <textarea name="origmessage" style="float:left;width:97%;height:400px;background-color:white">{{ origdoc }}</textarea> -->
+
+<div id="origdisplay" contenteditable="true" spellcheck="false" name="origmessageraw">
+              {{ origdoc }}
+            </div>
+          <textarea id="origmessagebox" name="origmessage" style="display: none"></textarea>
+
        </div> 
    </div>
 
@@ -280,7 +315,7 @@ $(document).ready(function() {
 <center><input type="submit" value="Try again" style="margin: 20px auto;clear:both"></center>
     </form>
 -->
-<p><strong>About this site</strong><br/>This analysis only considers the top 10,000 words used in English. Extremely rare words (like uncommon names) and multi-word expressions are not considered. <strong>Using Nondescript does not guarantee anonymity!</strong> Your texts are compared to a random assortment of web writing from the Blog Authorship Corpus, but these are writings from strangers &mdash; bear in mind that in a true investigation, your writing would be compared to those closest to you. <a href="about">More info&nbsp;&raquo;</a></p>
+<p><strong>About this site</strong><br/>This analysis only considers the top 1,000 words used in English. Rare words (like many names) and multi-word expressions are not considered. <strong>Using Nondescript does not guarantee anonymity!</strong> Your texts are compared to a random assortment of web writing from the Blog Authorship Corpus, but these are writings from strangers &mdash; bear in mind that in a true investigation, your writing would be compared to those closest to you. <a href="about">More info&nbsp;&raquo;</a></p>
 
 </body>
 </html>

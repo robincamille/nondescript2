@@ -11,8 +11,12 @@ from wordfilter import Wordfilter
 
 wf = Wordfilter() #https://github.com/dariusk/wordfilter
 #Words that may be offensive or that have undesirable results in WordNet:
-ignore = ['will','more','must','there','john','screw','queer','crap','shit','ass','fuck','fucker','motherfucker','fucks','fucked','fucking']
+ignore = ['will','more','must','there','john','screw','queer','crap','shit','ass','sex','fuck','fucker','motherfucker','fucks','fucked','fucking']
            
+
+with open('data/top1000.txt') as vocdoc:
+     topwords = [w[:-1] for w in vocdoc.readlines()]
+
 def changewords(text):
     """Returns two texts [T1, T2]: T1 text with certain words (in all caps) followed by
 potential synonyms in parentheses, T2 text with randomly-chosen synonyms in all caps
@@ -49,6 +53,8 @@ that replace certain words."""
                         pass
                     elif wf.blacklisted(new) == True: #avoid bad words
                         pass
+                    elif new in ignore: #avoid inappropriate words
+                        pass
                     else:
                         if '_' in new: 
                             new = new.split('_') #multi-word expressions
@@ -64,7 +70,11 @@ that replace certain words."""
                 textprint.append(w)
                 luckyprint.append(w)
             else:
-                textprint.append(('[[' + w + ',' + wprint[:-1] + ']]'))
+                if w.lower() in topwords:
+                    #emphasize urgency of changing considered words
+                    textprint.append(('@@' + w + ',' + wprint[:-1] + '@@'))
+                else:
+                    textprint.append(('[[' + w + ',' + wprint[:-1] + ']]'))
                 luckyprint.append(randword.upper())
         else:
             textprint.append(w)

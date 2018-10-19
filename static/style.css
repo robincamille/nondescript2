@@ -6,7 +6,7 @@ body {
 	
 body, input, select, textarea {
 		color: #6e6e6e;
-		font-family: 'Open Sans', Arial, sans-serif;
+		font-family: Helvetica, Arial, sans-serif;
 		font-size: 12pt;
 		font-weight: 400;
 	}
@@ -68,26 +68,26 @@ body, input, select, textarea {
 	input[type="email"],
 	select,
 	textarea {
-		-moz-appearance: none;
+/*		-moz-appearance: none;
 		-webkit-appearance: none;
 		-o-appearance: none;
 		-ms-appearance: none;
-		appearance: none;
-		-moz-transition: background-color 0.2s ease-in-out;
+		appearance: none;*/
+/*		-moz-transition: background-color 0.2s ease-in-out;
 		-webkit-transition: background-color 0.2s ease-in-out;
 		-o-transition: background-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out;
-		transition: background-color 0.2s ease-in-out;
-		background: none;
+		transition: background-color 0.2s ease-in-out;*/
+		background: white;
 		border-radius: 4px;
-		border: 0;
 		border: solid 1px silver;
 		color: inherit;
-		display: block;
+		/*display: block;*/
 		outline: 0;
+		margin:2px;
 		padding: 0.75em;
 		text-decoration: none;
-		width: 100%;
+		/*width: 100%;*/
 		opacity: 1;
 	}
 
@@ -96,7 +96,7 @@ body, input, select, textarea {
 		input[type="email"]:focus,
 		select:focus,
 		textarea:focus {
-			background: rgba(224, 224, 224, 0.15);
+			/*background: rgba(224, 224, 224, 0.15);*/
 			border-color: #00b2ff;
 		}
 
@@ -250,6 +250,7 @@ body, input, select, textarea {
   bottom: 0;
   padding: 20px;
   border: 1px solid #ccc; 
+  overflow:auto;
 }
 [type=radio]:checked ~ label {
   background: white;
@@ -258,4 +259,12 @@ body, input, select, textarea {
 }
 [type=radio]:checked ~ label ~ .content {
   z-index: 1;
+}
+input.topword {
+	border:2px solid tomato;
+	background-color: rgba(224, 224, 224, 0.15);
+}
+select.wordset {
+	border:2px solid tomato;
+	height: 42px;
 }

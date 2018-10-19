@@ -33,7 +33,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     authcount = 0
 
     # Choose other random authors from the background corpus
-    while len(otherauths) < 3: #number of authors to compare to
+    while len(otherauths) < 5: #number of authors to compare to
         with open(authsfile, 'rb') as listauths:
             allauths = listauths.readlines()
             auth = allauths[randint(0,len(allauths)-1)]
@@ -95,9 +95,9 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     scoretest = (gnbtest.score(tfarraynew,targets)) * 100
     scoretest =  "%.1f" % scoretest
     if predstest[-1] == anontarget:
-        printclassify.append("Message is still attributed to you by this classifier.")
+        printclassify.append("Try again: Message is still attributed to you by this classifier.")
     else:
-        printclassify.append("Message successfully anonymized for this classifier.")
+        printclassify.append("Success: Message successfully anonymized for this classifier.")
     printclassify.append("Overall (testing) classifier score: " + str(scoretest) + ' out of 100')
 
     return printclassify
