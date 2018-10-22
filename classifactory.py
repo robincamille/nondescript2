@@ -2,9 +2,9 @@
 # converted to tf (term frequency) arrays. Trains classifier on known documents
 # Then runs trained classifier on a set of new documents to predict authors.
 # Returns textual description of testing classifier results as a list.
-# Background corpus: 1 long document each from 7 known authors from given directory.
+# Background corpus: 1 long document each from n known authors from given directory.
 
-# Training document set: 2 documents each from 7 randomly-chosen authors, two
+# Training document set: 2 documents each from n randomly-chosen authors, two
 # parts of the user's submitted writing sample.
 # Testing document set: 2 more documents each from the same 7 authors,
 # the rest of the submitted writing sample, message user wishes to test for
@@ -54,11 +54,11 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
             comparedocs.append(toponly.top(' '.join(fulltextdocs[2]),topnum))
             comparedocstest.append(toponly.top(' '.join(fulltextdocs[4]),topnum))
             comparedocstest.append(toponly.top(' '.join(fulltextdocs[6]),topnum))
-            targets.append(authcount)
+            targets.append(authcount) # Set up targets list [0,0,1,1,...]
             targets.append(authcount)
             authcount += 1
 
-    # Set up targets list [0,0,1,1,...7,7]
+    # Add user to end of targets list [0,0,...n,n] where author is n
     anontarget = targets[-1] + 1
 
     targets.append(anontarget)
@@ -79,25 +79,28 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     comparedocstest.append(toponly.top(messagetext,topnum))
 
     # Set up term frequency arrays for train and test document sets
-    tfarray = tfidf(comparedocs).toarray()
-    tfarraynew = tfidf(comparedocstest).toarray()
+    tfarraytrain = tfidf(comparedocs).toarray()
+    tfarraytest = tfidf(comparedocstest).toarray()
 
     # Set up classifier 
     gnb = GaussianNB()
-    preds = gnb.fit(tfarray, targets).predict(tfarray)
-    classifiername = 'useclassifier' + timestamp
+    preds = gnb.fit(tfarraytrain, targets).predict(tfarraytrain)
+    scoretrain = (gnb.score(tfarraytrain,targets)) * 100 # Testing score
+    scoretrain =  "{:.1f}".format(scoretrain)
+    print "Training predictions\t" + str(preds) + "\t(user is last 2 targets)\tScore: " + str(scoretrain) # To console only
+    classifiername = 'classifier' #+ timestamp
     classif = joblib.dump(gnb,classifiername) #save classifier
 
-    # Use trained classifier on new text, return score and message-specific report
+    # Test trained classifier on new text, return score and message-specific report
     gnbtest = joblib.load(classif[0]) #must have saved a classifier previously
-    predstest = gnbtest.predict(tfarraynew)
-    print predstest
-    scoretest = (gnbtest.score(tfarraynew,targets)) * 100
-    scoretest =  "%.1f" % scoretest
+    predstest = gnbtest.predict(tfarraytest)
+    scoretest = (gnbtest.score(tfarraytest,targets)) * 100 # Testing score
+    scoretest =  "{:.1f}".format(scoretest)
+    print "Testing predictions\t" + str(predstest) + "\t(user is last 2 targets)\tScore: " + str(scoretest)  # To console only
     if predstest[-1] == anontarget:
         printclassify.append("Try again: Message is still attributed to you by this classifier.")
     else:
         printclassify.append("Success: Message successfully anonymized for this classifier.")
-    printclassify.append("Overall (testing) classifier score: " + str(scoretest) + ' out of 100')
+    printclassify.append("Overall classifier score: " + str(scoretest) + ' out of 100')
 
     return printclassify

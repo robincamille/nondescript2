@@ -24,30 +24,30 @@ with open(topcorpuswords100) as top100file:
 def top(fulltext, howmany = None):
     """Returns a given text with only the words in the top 100, 1000, or 10,000 words in English, or all words (default)."""
     if howmany == 10000:
-        top = [w for w in fulltext.lower().split() if w in top10k]
-        return ' '.join(top)
+        toptext = [w for w in fulltext.lower().split() if w in top10k]
+        return ' '.join(toptext)
     if howmany == 5000:
         #top = [w for w in fulltext.lower().split() if w in top1k]
-        top = []
+        toptext = []
         fulltext = re.findall(r"[\w']+|[!\"#$%&()*+,-./:;<=>?@\[\]^_`{|}~]",fulltext.lower())
         for w in fulltext:
             if w in top5k:
-                top.append(w)
-        returntext = ' '.join(top)
+                toptext.append(w)
+        returntext = ' '.join(toptext)
         return returntext
     if howmany == 1000:
         #top = [w for w in fulltext.lower().split() if w in top1k]
-        top = []
+        toptext = []
         fulltext = re.findall(r"[\w']+|[!\"#$%&()*+,-./:;<=>?@\[\]^_`{|}~]",fulltext.lower())
         for w in fulltext:
             if w in top1k:
-                top.append(w)
-        returntext = ' '.join(top)
+                toptext.append(w)
+        returntext = ' '.join(toptext)
         #print(returntext[:50]) #my message word , email , , , , every year , i < blog > < date > , july ,
         return returntext
     if howmany == 100:
-        top = [w for w in fulltext.lower().split() if w in top100]
-        return ' '.join(top)
+        toptext = [w for w in fulltext.lower().split() if w in top100]
+        return ' '.join(toptext)
     if howmany == None:
         return fulltext
 

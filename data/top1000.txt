@@ -247,9 +247,7 @@ used
 fun
 done
 week
-blog
 decided
-post
 friend
 able
 hate
@@ -880,7 +878,6 @@ cd
 decide
 serious
 fire
-date
 choose
 view
 smile
