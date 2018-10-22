@@ -1,21 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
-
-
-<title>NONDESCRIPT 2</title>
-
-<script
-  src="https://code.jquery.com/jquery-3.3.1.js"
-  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-  crossorigin="anonymous"></script>
-  <!--<script src="{{ url_for('static',filename='easyeditform.js') }}"></script>-->
-
-
-<script> 
-
-//below, takes in specially-formatted text and outputs into a
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+    <title>NONDESCRIPT 2</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <!--<script src="{{ url_for('static',filename='easyeditform.js') }}"></script>-->
+    <script>
+        //below, takes in specially-formatted text and outputs into a
 //user-friendy display with underlines for words that have synonyms.
 
 //text format: words must be split with __ (two underscores)
@@ -26,8 +18,9 @@ $(document).ready(function() {
   console.log('javascript connected!');
 
     const $textDisplay = $('#textdisplay');
-    const $unusualWords = $('#unusualwordsonly');
-    const $stopWords = ["I","a","in","the"]; //sample stopwords for future feature 
+    const $unusualWords = $('#unusualwordsonly')[0].innerHTML.split(' ');
+    console.log($unusualWords);
+    //const $stopWords = ["I","a","in","the"]; //sample stopwords for future feature 
 
     let $separated = "{{ suggestdoc }}"; //pre-formatted with double-underscores and curly brax
     let $theText = $separated.split('__'); //split on double underscore
@@ -47,10 +40,22 @@ $(document).ready(function() {
         let $chosenWord = $newWord[0] + ' '; //initialize
         // console.log($newWord[0]);
 
-        // if ($unusualWords.includes($chosenWord)) {
-        //   console.log("unusual:");
-        //   console.log($chosenWord);
-        // };
+        // if word with wordset options is one the user should REALLY change 
+        if ($unusualWords.includes($newWord[0])) {
+                  let $para = $('<span class="itemurgent"></span>');
+        $para.attr("id",$wordId);
+        $para.append($('<span class="itemoriginal"></span>').text($newWord[0]));
+        let $paraList = $('<ul></ul>');
+        $newWord.forEach(function(wordoption) {
+            let option = '<li>' + wordoption + '</li>';
+            $paraList.append(option);
+          })
+        let $suggestionContainer = $('<span class="itemsuggestion"></span>');
+        $suggestionContainer.append($paraList);
+        $para.append($suggestionContainer);
+        $textDisplay.append($para); //add menus to revision area
+
+        } else { //if word is in top 1k word with wordset options 
 
         let $para = $('<span class="itemflag"></span>');
         $para.attr("id",$wordId);
@@ -64,8 +69,8 @@ $(document).ready(function() {
         let $suggestionContainer = $('<span class="itemsuggestion"></span>');
         $suggestionContainer.append($paraList);
         $para.append($suggestionContainer);
-        
         $textDisplay.append($para); //add menus to revision area
+        };
 
       } else if (word.slice(0,2) === '[[') { //if it is a wordset option not in the top 1k words
         let $wordSet = word.slice(2, word.length - 2);
@@ -89,9 +94,15 @@ $(document).ready(function() {
 
       }
       else {
-
-        let $newWord = word + ' ';
-        $textDisplay.append($newWord);
+        if ($unusualWords.includes(word)) {
+          let $wordContainer = $('<span class="itemurgentnosyn"></span>');
+          let $newWord = word + ' ';
+          $wordContainer.append($newWord);
+          $textDisplay.append($wordContainer);
+        } else {
+          let $newWord = word + ' ';
+          $textDisplay.append($newWord);
+        }
 
       };
     })
@@ -103,7 +114,7 @@ $(document).ready(function() {
     
   const $message = $('#textdisplay');
   const $suggestions = $('#textdisplaysuggestions');
-  const $item = $('.itemhighlight, .itemflag');
+  const $item = $('.itemhighlight, .itemflag, .itemurgent');
   const $itemSuggestion = $('.itemsuggestion');
   const $itemInMessage = $('#message .itemhighlight');
 
@@ -165,154 +176,186 @@ $(document).ready(function() {
   
 
 </script>
+    <style type="text/css">
+    .itemsuggestion {
+        display: none;
+    }
 
-  <style type="text/css">
-    .itemsuggestion {display:none;}
-    .itemflag, .itemfinished, .itemhighlight {white-space:pre;margin-right: 5px;cursor:pointer;}
-    .itemhighlight {border-bottom:2px solid darkblue;}
-    .itemflag {border-bottom:2px solid red;}
-    .itemfinished {border-bottom:2px solid silver}
-    #textdisplaysuggestions .itemsuggestion {display:block;cursor:pointer;}
+    .itemurgent,
+    .itemflag,
+    .itemfinished,
+    .itemhighlight {
+        white-space: pre;
+        margin-right: 5px;
+        cursor: pointer;
+    }
 
-    #textdisplay, #luckydisplay, #origdisplay {float:left;width:68%;height:350px;overflow:auto;background-color:white;border:1px solid gray;line-height:2em;padding:5px;}
-    #textdisplaysuggestionscontainer {float:right;width:27%;background-color: PapayaWhip; padding:8px;height:350px;}
-    #textdisplaysuggestions {background-color:white;height:180px;overflow:auto;border:1px solid silver;padding:5px;}
-  </style>
+    .itemurgent {
+        border-bottom: 3px solid red;
+        background-color: #ffd7dd;
+    }
 
+    .itemurgentnosyn {
+        background-color: #ffd7dd;
+        border-bottom: 3px solid #ffd7dd;
+    }
+
+    .itemhighlight {
+        border-bottom: 3px solid LightSkyBlue;
+    }
+
+    .itemflag {
+        border-bottom: 3px solid red;
+    }
+
+    .itemfinished {
+        border-bottom: 3px solid silver
+    }
+
+    #textdisplaysuggestions .itemsuggestion {
+        display: block;
+        cursor: pointer;
+    }
+
+    #textdisplay,
+    #luckydisplay,
+    #origdisplay {
+        float: left;
+        width: 68%;
+        height: 400px;
+        overflow: auto;
+        background-color: white;
+        border: 1px solid #ccc;
+        line-height: 2em;
+        padding: 5px;
+    }
+
+    #textdisplaysuggestionscontainer {
+        float: right;
+        width: 27%;
+        background-color: PapayaWhip;
+        padding: 8px;
+        height: 400px;
+    }
+
+    #textdisplaysuggestions {
+        background-color: white;
+        height: 190px;
+        overflow: auto;
+        border: 1px solid #ccc;
+        padding: 5px;
+    }
+    </style>
 </head>
+
 <body style="background:tomato">
-
     <h1><a href="/" style="color:#fff;border:0;">NONDESCRIPT</a></h1>
-
-<div style="background:#fff">
-    <p style="text-align:center"><span style="font-weight:700;font-size:1.5em;">Results</span><br/>Compared to 5 random authors' documents in our background corpus, was your message still classified as yours?</p>  
-    <p style="font-size: 1.5em;text-align:center;padding:0;margin:0;">
-    <strong>
+    <div style="background:#fff">
+        <p style="text-align:center;margin-bottom: 0"><span style="font-weight:700;font-size:1.5em">Results</span><br />Compared to 5 random authors' documents in our background corpus, was your message still classified as yours?</p>
+        <p style="font-size: 1.5em;text-align:center;padding:0;margin:0;">
+            <strong>
       {{ classifieroutcome}}
     </strong>
-    </p>
-    <p style="text-align:center">
-      {{ classifierscore }}
-     </p> 
-     </div>
-    
-    <p style="width:45%;float:left;font-size:0.8em;"><strong>Analysis of your writing sample and message</strong><br/>
-    <em>Low similarity score: 0.4. High similarity score: 1.0.</em><br/>
-    {% for c in comparestats %} 
-    <span style="margin:5px;display:block">
+        </p>
+        <p style="text-align:center">
+            {{ classifierscore }}
+        </p>
+    </div>
+    <p style="width:45%;float:left;font-size:0.8em;margin-right:1%;"><strong>Analysis of your writing sample and message</strong><br />
+        <em>Low similarity score: 0.4. High similarity score: 1.0.</em><br />
+        {% for c in comparestats %}
+        <span style="margin:5px;display:block">
     {{ c }}
     </span>
-    {% endfor %}
-     </p> 
-    
-    <p style="width:45%;float:right;font-size:0.8em;"><strong>Analysis of your overall writing style</strong><br/>
-      {% for o in compareoverall %} 
-      <span style="margin:5px;display:block">
+        {% endfor %}
+    </p>
+    <p style="width:45%;float:right;font-size:0.8em;"><strong>Your most unusual words</strong><br />
+      You use these words much more often, compared with an average document.<br/>
+        {% for u in unusualwords %}
+        <span style="line-height: 1.3em;display:block;">&bull; {{ u }}</span>
+        {% endfor %}
+        <span style="display:none" id="unusualwordsonly">{{ unusualwordsonly }}</span>
+    </p>
+    <p style="width:45%;float:left;font-size:0.8em;margin-right:1%;"><strong>Analysis of your overall writing style</strong><br />
+        {% for o in compareoverall %}
+        <span style="margin:5px;display:block">
       {{ o }}
       </span>
-      {% endfor %}
-      {% for u in unusualwords %} 
-      &bull; {{ u }} <br/>
-      {% endfor %}
-      <span style="display:none" id="unusualwordsonly"> {{ unusualwordsonly }} </span>  
-    </p> 
-    
-    <form action="#" method="POST" style="clear:both;min-height:600px;">
+        {% endfor %}
+      </p>
 
-  <textarea name="corpus" style="display:none;">
+    <form action="#" method="POST" style="clear:both;min-height:600px;">
+        <textarea name="corpus" style="display:none;">
   {{ corpus }} 
   </textarea>
-    <textarea id="repeatdoc" style="display:none;">
+        <textarea id="repeatdoc" style="display:none;">
 {{ repeatdoc }}
   </textarea>
-  
-<h2>Try again?</h2>
-
-<div class="tabs">
-    
-   <div class="tab">
-       <input type="radio" id="tab-1" name="whichmessage" value="choosesuggestmessage" checked>
-       <label for="tab-1">Revise manually</label>
-       
-       <div class="content">
-       <p style="margin:0;padding: 15px 0 0 0;line-height: 1.35em">Suggestions for synonyms provided. For the purposes of this app, all text is changed to lowercase.</p> 
-       <ul>
-         <li style="padding-bottom:10px;line-height: 1.35em">
-        <span class="itemflag">Red underline</span>means these words are used to determine authorship, so you should prioritize changing these to a suggested synonym or a word(s) of your own choosing.
-      </li><li style="line-height: 1.35em">
-        <span class="itemhighlight">Blue underlines</span>are not used to determine authorship, but they still have synonym suggestions.</li>
-       </ul>
-            <div id="textdisplay" contenteditable="true" spellcheck="false" name="suggestmessageraw">
-              
+        <h2>Try again?</h2>
+        <div class="tabs">
+            <div class="tab">
+                <input type="radio" id="tab-1" name="whichmessage" value="choosesuggestmessage" checked>
+                <label for="tab-1">Revise manually</label>
+                <div class="content">
+                    <p style="margin:0;padding: 15px 0;">Suggestions for synonyms provided. For the purposes of this app, all text is changed to lowercase.</p>
+                    <div id="textdisplay" contenteditable="true" spellcheck="false" name="suggestmessageraw">
+                    </div>
+                    <div id="textdisplaysuggestionscontainer">
+                        <div id="advice">
+                            <h4>Overall suggestions for you</h4>
+                            {% for a in advice %}
+                            <span style="margin:5px 0 5px 10px;text-indent:-10px;display:block">
+                            &bull; {{ a }}
+                            </span>
+                            {% endfor %}
+                            <h4>Synonym suggestions</h4>
+                        </div>
+                        <div id="textdisplaysuggestions">
+                            Click an underlined word to choose from synonym replacements.
+                        </div>
+                        <span><em>Click a synonym to auto-replace an underlined word.</em></span>
+                    </div>
+                    <textarea id="suggestmessagebox" name="suggestmessage" style="display: none"></textarea>
+                </div>
             </div>
-
-            <div id="textdisplaysuggestionscontainer">
-              <div id="advice">
-                <h4>Overall suggestions for you</h4>
-                {% for a in advice %} 
-                <span style="margin:5px 0;display:block">
-                {{ a }}
-                </span>
-                {% endfor %}
-              <h4>Word choice changes</h4>
-              </div>
-              <div id="textdisplaysuggestions">
-                Click an underlined word to choose from synonym replacements.
-              </div>
-
-            </div>
-
-            <textarea id="suggestmessagebox" name="suggestmessage" style="display: none"></textarea>
-       </div> 
-   </div>
-    
-   <div class="tab">
-       <input type="radio" id="tab-2" name="whichmessage" value="chooseluckymessage">
-       <label for="tab-2">I'm feeling fortuitous</label>
-       
-       <div class="content">
-       <p style="margin:0">Synonyms chosen at random, denoted by capitalization. (Part of speech, tense, and plurality not considered.)</p>
-<!--            <textarea name="luckymessage" style="float:left;width:97%;height:400px;background-color:white">
+            <div class="tab">
+                <input type="radio" id="tab-2" name="whichmessage" value="chooseluckymessage">
+                <label for="tab-2">I'm feeling fortuitous</label>
+                <div class="content">
+                    <p style="margin:0">Synonyms chosen at random, denoted by capitalization. (Part of speech, tense, and plurality not considered.)</p>
+                    <!--            <textarea name="luckymessage" style="float:left;width:97%;height:400px;background-color:white">
              {{ luckydoc }}
           </textarea> -->
-          <div id="luckydisplay" contenteditable="true" spellcheck="false" name="luckymessageraw">
-              {{ luckydoc }}
+                    <div id="luckydisplay" contenteditable="true" spellcheck="false" name="luckymessageraw">
+                        {{ luckydoc }}
+                    </div>
+                    <textarea id="luckymessagebox" name="luckymessage" style="display: none"></textarea>
+                </div>
             </div>
-          <textarea id="luckymessagebox" name="luckymessage" style="display: none"></textarea>
-
-       </div> 
-       </div>
-       <div class="tab">
-       <input type="radio" id="tab-3" name="whichmessage" value="chooseorigmessage">
-       <label for="tab-3">Message as submitted</label>
-       
-       <div class="content">
-       <p style="margin:0">This is the message you just submitted. If you re-submit the message
-       below, Nondescript will compare it against different authors than before.</p>
-<!--            <textarea name="origmessage" style="float:left;width:97%;height:400px;background-color:white">{{ origdoc }}</textarea> -->
-
-<div id="origdisplay" contenteditable="true" spellcheck="false" name="origmessageraw">
-              {{ origdoc }}
+            <div class="tab">
+                <input type="radio" id="tab-3" name="whichmessage" value="chooseorigmessage">
+                <label for="tab-3">Message as submitted</label>
+                <div class="content">
+                    <p style="margin:0">This is the message you just submitted. If you re-submit the message
+                        below, Nondescript will compare it against different authors than before.</p>
+                    <!--            <textarea name="origmessage" style="float:left;width:97%;height:400px;background-color:white">{{ origdoc }}</textarea> -->
+                    <div id="origdisplay" contenteditable="true" spellcheck="false" name="origmessageraw">
+                        {{ origdoc }}
+                    </div>
+                    <textarea id="origmessagebox" name="origmessage" style="display: none"></textarea>
+                </div>
             </div>
-          <textarea id="origmessagebox" name="origmessage" style="display: none"></textarea>
-
-       </div> 
-   </div>
-
-    
-</div>
-<center>    <input id="submitButton" type="submit" value="Submit (takes a minute)"></center>
-</form>
-
- 
-             <!--<textarea name="message" style="float:left;width:55%;height:500px;background-color:white">
+        </div>
+        <center> <input id="submitButton" type="submit" value="Submit (takes a minute)"></center>
+    </form>
+    <!--<textarea name="message" style="float:left;width:55%;height:500px;background-color:white">
              {{ suggestdoc }}
 </textarea>
 
 <textarea name="message" style="float:left;width:55%;height:500px;background-color:white">
              {{ luckydoc }}
 </textarea>-->
-<!--<div style="float:right;width:40%;">
+    <!--<div style="float:right;width:40%;">
 <p><strong>Is your similarity score above 0.7? Try to mask your writing by using different words. Suggestions for word choices are in parentheses to the left. 
 </strong></p>
 <p>More suggestions:</p>
@@ -327,7 +370,20 @@ $(document).ready(function() {
 <center><input type="submit" value="Try again" style="margin: 20px auto;clear:both"></center>
     </form>
 -->
-<p><strong>About this site</strong><br/>This analysis only considers the top 1,000 words used in English. Rare words (like many names) and multi-word expressions are not considered. <strong>Using Nondescript does not guarantee anonymity!</strong> Your texts are compared to a random assortment of web writing from the Blog Authorship Corpus, but these are writings from strangers &mdash; bear in mind that in a true investigation, your writing would be compared to those closest to you. <a href="about">More info&nbsp;&raquo;</a></p>
-
+    <div style="background:#fff;padding:15px;margin-bottom: 15px"><h4>Annotation</h4>
+        What the highlights and underlines in the 'Revise manually' box mean:
+        <ul>
+            <li style="padding-bottom:10px;line-height: 1.35em">
+                <span class="itemurgentnosyn">Pink highlighted</span> words are those that you use much more often than the rest of the authors we compare your text to, so you should definitely change or delete them.
+            </li>
+            <li style="padding-bottom:10px;line-height: 1.35em">
+                <span class="itemflag">Red underlined</span>words are used to determine authorship, so you should prioritize changing these to a suggested synonym or a word(s) of your own choosing.
+            </li>
+            <li style="line-height: 1.35em">
+                <span class="itemhighlight">Blue underlined</span>words are not used to determine authorship, but they still have synonym suggestions.</li>
+        </ul>
+    </div>
+    <p><strong>About this site:</strong> This analysis only considers the top 1,000 words used in English. Rare words (like many names) and multi-word expressions are not considered, so they won't be underlined above. <strong>Using Nondescript does not guarantee anonymity!</strong> Your texts are compared to a random assortment of web writing from the Blog Authorship Corpus, but these are writings from strangers &mdash; bear in mind that in a true investigation, your writing would be compared to those closest to you, and many other stylistic features about your writing would be considered, such as punctuation use. <a href="about">More info&nbsp;&raquo;</a></p>
 </body>
+
 </html>

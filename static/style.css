@@ -1,270 +1,294 @@
 body {
-		background: silver;
-		max-width:1000px;
-		margin:20px auto 0 auto;
-	}
-	
-body, input, select, textarea {
-		color: #6e6e6e;
-		font-family: Helvetica, Arial, sans-serif;
-		font-size: 12pt;
-		font-weight: 400;
-	}
+    background: silver;
+    max-width: 1000px;
+    margin: 20px auto 0 auto;
+}
 
-	a {
-		-moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		-webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		-o-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		-ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-		border-bottom: dotted 1px;
-		color: #1346a1;
-		text-decoration: none;
-	}
+body,
+input,
+select,
+textarea {
+    color: #6e6e6e;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12pt;
+    font-weight: 400;
+}
 
-		a:hover {
-			color:#1e65e4;
-		}
+a {
+    -moz-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    -webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    -o-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+    border-bottom: dotted 1px;
+    color: #1346a1;
+    text-decoration: none;
+}
 
-	strong, b {
-		font-weight: 600;
-		color: #5b5b5b;
-	}
+a:hover {
+    color: #1e65e4;
+}
 
-	em, i {
-		font-style: italic;
-	}
+strong,
+b {
+    font-weight: 600;
+    color: #5b5b5b;
+}
 
-	p, ol, dl, table, blockquote, form {
-		margin: 0 0 2em 0;
-		background-color: white;
-		padding:15px;
-	}
+em,
+i {
+    font-style: italic;
+}
 
-	h2, h3, h4, h5, h6 {
-		color: #5b5b5b;
-		margin-bottom: .5em;
-		text-align: center;
-	}
+p,
+ol,
+dl,
+table,
+blockquote,
+form {
+    margin: 0 0 1em 0;
+    background-color: white;
+    padding: 15px;
+}
 
-	h1 {
-	color:#ffffff;
-		margin-bottom: 1em;
-		text-align: center;
-	}
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #5b5b5b;
+    margin-bottom: .5em;
+    text-align: center;
+}
+
+h1 {
+    color: #ffffff;
+    margin-bottom: 1em;
+    text-align: center;
+}
 
 /* Form */
 
-	label {
-		display: block;
-		color: #5b5b5b;
-		font-size: 0.8em;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
+label {
+    display: block;
+    color: #5b5b5b;
+    font-size: 0.8em;
+    font-weight: 700;
+    margin: 0 0 0.5em 0;
+}
 
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
-	select,
-	textarea {
-/*		-moz-appearance: none;
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select,
+textarea {
+    /*		-moz-appearance: none;
 		-webkit-appearance: none;
 		-o-appearance: none;
 		-ms-appearance: none;
 		appearance: none;*/
-/*		-moz-transition: background-color 0.2s ease-in-out;
+    /*		-moz-transition: background-color 0.2s ease-in-out;
 		-webkit-transition: background-color 0.2s ease-in-out;
 		-o-transition: background-color 0.2s ease-in-out;
 		-ms-transition: background-color 0.2s ease-in-out;
 		transition: background-color 0.2s ease-in-out;*/
-		background: white;
-		border-radius: 4px;
-		border: solid 1px silver;
-		color: inherit;
-		/*display: block;*/
-		outline: 0;
-		margin:2px;
-		padding: 0.75em;
-		text-decoration: none;
-		/*width: 100%;*/
-		opacity: 1;
-	}
+    background: white;
+    border-radius: 4px;
+    border: solid 1px silver;
+    color: inherit;
+    /*display: block;*/
+    outline: 0;
+    margin: 2px;
+    padding: 0.75em;
+    text-decoration: none;
+    /*width: 100%;*/
+    opacity: 1;
+}
 
-		input[type="text"]:focus,
-		input[type="password"]:focus,
-		input[type="email"]:focus,
-		select:focus,
-		textarea:focus {
-			/*background: rgba(224, 224, 224, 0.15);*/
-			border-color: #00b2ff;
-		}
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+    /*background: rgba(224, 224, 224, 0.15);*/
+    border-color: #00b2ff;
+}
 
-	input[type="text"],
-	input[type="password"],
-	input[type="email"],
-	select {
-		line-height: 1em;
-	}
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+    line-height: 1em;
+}
 
-	textarea {
-		padding: 0.5em 0.75em;
-	}
+textarea {
+    padding: 0.5em 0.75em;
+}
 
-	::-webkit-input-placeholder {
-		color: inherit;
-		opacity: 0.5;
-		position: relative;
-		top: 3px;
-	}
+::-webkit-input-placeholder {
+    color: inherit;
+    opacity: 0.5;
+    position: relative;
+    top: 3px;
+}
 
-	:-moz-placeholder {
-		color: inherit;
-		opacity: 0.5;
-	}
+:-moz-placeholder {
+    color: inherit;
+    opacity: 0.5;
+}
 
-	::-moz-placeholder {
-		color: inherit;
-		opacity: 0.5;
-	}
+::-moz-placeholder {
+    color: inherit;
+    opacity: 0.5;
+}
 
-	:-ms-input-placeholder {
-		color: inherit;
-		opacity: 0.5;
-	}
+:-ms-input-placeholder {
+    color: inherit;
+    opacity: 0.5;
+}
 
-	.formerize-placeholder {
-		color: rgba(110, 110, 110, 0.5) !important;
-	}
+.formerize-placeholder {
+    color: rgba(110, 110, 110, 0.5) !important;
+}
 
 
 /* Button */
 
-	input[type="submit"],
-	input[type="reset"],
-	input[type="button"],
-	.button {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-o-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		-moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-		-webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-		-o-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-		-ms-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-		transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-		background: #544d55;
-		border-radius: 4px;
-		border: 0;
-		color: white;
-		cursor: pointer;
-		display: block;
-		font-size: 1em;
-		font-weight: 700;
-		min-width: 15em;
-		min-height:4em;
-		padding: 0 1.5em;
-		text-align: center;
-		text-decoration: none;
-	}
-
-		input[type="submit"]:hover,
-		input[type="reset"]:hover,
-		input[type="button"]:hover,
-		.button:hover {
-			background: #6e6570;
-		}
-
-		input[type="submit"]:active,
-		input[type="reset"]:active,
-		input[type="button"]:active,
-		.button:active {
-			background: #474148;
-		}
-
-		input[type="submit"].alt,
-		input[type="reset"].alt,
-		input[type="button"].alt,
-		.button.alt {
-			background: none;
-			box-shadow: inset 0 0 0 1px rgba(224, 224, 224, 0.75);
-			color: #544d55;
-		}
-
-			input[type="submit"].alt:hover,
-			input[type="reset"].alt:hover,
-			input[type="button"].alt:hover,
-			.button.alt:hover {
-				background: rgba(224, 224, 224, 0.15);
-			}
-
-			input[type="submit"].alt:active,
-			input[type="reset"].alt:active,
-			input[type="button"].alt:active,
-			.button.alt:active {
-				background: rgba(224, 224, 224, 0.35);
-			}
-
-		input[type="submit"].fit,
-		input[type="reset"].fit,
-		input[type="button"].fit,
-		.button.fit {
-			width: 100%;
-		}
-
-		input[type="submit"].small,
-		input[type="reset"].small,
-		input[type="button"].small,
-		.button.small {
-			font-size: 0.8em;
-		}
-		
-		.tabs { /* Thanks https://css-tricks.com/functional-css-tabs-revisited/ */
-  position: relative;   
-  min-height: 570px;
-  clear: both;
-  margin: 25px 0;
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+.button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -o-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    -moz-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    -webkit-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    -o-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    -ms-transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    background: #544d55;
+    border-radius: 4px;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    font-weight: 700;
+    min-width: 15em;
+    min-height: 4em;
+    padding: 0 1.5em;
+    text-align: center;
+    text-decoration: none;
 }
+
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+.button:hover {
+    background: #6e6570;
+}
+
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+.button:active {
+    background: #474148;
+}
+
+input[type="submit"].alt,
+input[type="reset"].alt,
+input[type="button"].alt,
+.button.alt {
+    background: none;
+    box-shadow: inset 0 0 0 1px rgba(224, 224, 224, 0.75);
+    color: #544d55;
+}
+
+input[type="submit"].alt:hover,
+input[type="reset"].alt:hover,
+input[type="button"].alt:hover,
+.button.alt:hover {
+    background: rgba(224, 224, 224, 0.15);
+}
+
+input[type="submit"].alt:active,
+input[type="reset"].alt:active,
+input[type="button"].alt:active,
+.button.alt:active {
+    background: rgba(224, 224, 224, 0.35);
+}
+
+input[type="submit"].fit,
+input[type="reset"].fit,
+input[type="button"].fit,
+.button.fit {
+    width: 100%;
+}
+
+input[type="submit"].small,
+input[type="reset"].small,
+input[type="button"].small,
+.button.small {
+    font-size: 0.8em;
+}
+
+.tabs {
+    /* Thanks https://css-tricks.com/functional-css-tabs-revisited/ */
+    position: relative;
+    min-height: 580px;
+    clear: both;
+    margin: 25px 0;
+}
+
 .tab {
-  float: left;
+    float: left;
 }
+
 .tab label {
-  background: #eee; 
-  padding: 10px; 
-  border: 1px solid #ccc; 
-  margin-left: -1px; 
-  position: relative;
-  left: 1px; 
-  line-height:1em;
+    background: #eee;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-left: -1px;
+    position: relative;
+    left: 1px;
+    line-height: 1em;
 }
+
 .tab [type=radio] {
-  display: none;   
+    display: none;
 }
+
 .content {
-  position: absolute;
-  top: 34px;
-  left: 0;
-  background: white;
-  right: 0;
-  bottom: 0;
-  padding: 20px;
-  border: 1px solid #ccc; 
-  overflow:auto;
+    position: absolute;
+    top: 34px;
+    left: 0;
+    background: white;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    overflow: auto;
 }
-[type=radio]:checked ~ label {
-  background: white;
-  border-bottom: 1px solid white;
-  z-index: 2;
+
+[type=radio]:checked~label {
+    background: white;
+    border-bottom: 1px solid white;
+    z-index: 2;
 }
-[type=radio]:checked ~ label ~ .content {
-  z-index: 1;
+
+[type=radio]:checked~label~.content {
+    z-index: 1;
 }
+
 input.topword {
-	border:2px solid tomato;
-	background-color: rgba(224, 224, 224, 0.15);
+    border: 2px solid tomato;
+    background-color: rgba(224, 224, 224, 0.15);
 }
+
 select.wordset {
-	border:2px solid tomato;
-	height: 42px;
+    border: 2px solid tomato;
+    height: 42px;
 }
+

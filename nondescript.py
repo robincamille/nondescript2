@@ -22,8 +22,8 @@ def changewords(text):
 potential synonyms in parentheses, T2 text with randomly-chosen synonyms in all caps
 that replace certain words."""
     i = 0
-    #text = text.split()
-    text = tok(text)
+    text = text.split()
+    #text = tok(text) - more accurate, but difficult to join below
     textprint = [] #Text will appear as so: she SHOUTED (shout out, call...
     luckyprint = [] #Random synonym will be chosen, as so: She shout out... (No tense consideration)
     for w in text: 

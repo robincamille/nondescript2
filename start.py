@@ -97,7 +97,7 @@ def my_form_post():
     printoverall.append("Your overall sentence length is {:.2f}x \
         everyone else's average.".format(sent_compare))
     
-    advice.append("Focus on changing the red-underlined words.")
+    advice.append("Focus on changing the highlighted and red-underlined words.")
 
 
 
@@ -148,13 +148,12 @@ def my_form_post():
         else:
             pass
 
-    printoverall.append('Five most unusual words overall, compared with an average document:')
     compwordssort = sorted(compwords,reverse=True)
     
-    for i in compwordssort[:5]:
+    for i in compwordssort[:10]:
     	unusualwordsonly.append(i[1])
-        printunusualwords.append('%15s %4.2fx more frequent (used %d times)' % (i[1],i[0],i[2]))
-
+        printunusualwords.append('{}: {:.1f}x more frequent (used {} times in message)'.format(i[1],i[0],i[2]))
+    unusualwordsonly = ' '.join(unusualwordsonly)
 
 
     # The important bit: 
@@ -175,7 +174,7 @@ def my_form_post():
     #Output to send to compare-output-simple.html
     return render_template("compare-output-simple.html", \
                            compareoverall = printoverall, \
-                           # unusualwordsonly = unusualwordsonly, \
+                           unusualwordsonly = unusualwordsonly, \
                            unusualwords = printunusualwords, \
                            advice = advice, \
                            corpus = corpus, \
