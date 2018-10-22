@@ -32,7 +32,6 @@ a:hover {
 strong,
 b {
     font-weight: 600;
-    color: #5b5b5b;
 }
 
 em,
@@ -56,7 +55,6 @@ h3,
 h4,
 h5,
 h6 {
-    color: #5b5b5b;
     margin-bottom: .5em;
     text-align: center;
 }
@@ -71,7 +69,6 @@ h1 {
 
 label {
     display: block;
-    color: #5b5b5b;
     font-size: 0.8em;
     font-weight: 700;
     margin: 0 0 0.5em 0;

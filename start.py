@@ -115,9 +115,9 @@ def my_form_post():
     #totslavg = mean(totsl)
     sent_compare = avgsentlength(doc)/backgroundcorpusSL
     if sent_compare > 1.2:
-        advice.append("Try shorter sentences.")
+        advice.append("Use shorter sentences.")
     elif sent_compare < 0.9:
-        advice.append("Try longer sentences.")
+        advice.append("Use longer sentences.")
     printoverall.append("Your overall sentence length is {:.2f}x \
         everyone else's average.".format(sent_compare))
     

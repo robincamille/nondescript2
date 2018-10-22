@@ -264,13 +264,13 @@ $(document).ready(function() {
     <p style="width:45%;float:left;font-size:0.8em;margin-right:1%;"><strong>Analysis of your writing sample and message</strong><br />
         <em>Low similarity score: 0.4. High similarity score: 1.0.</em><br />
         {% for c in comparestats %}
-        <span style="margin:5px;display:block">
+        <span style="margin:5px 0;display:block">
     {{ c }}
     </span>
         {% endfor %}
     </p>
     <p style="width:45%;float:right;font-size:0.8em;"><strong>Your most unusual words</strong><br />
-      You use these words much more often, compared with an average document.<br/>
+      You use these words much more often, compared to other writers.<br/>
         {% for u in unusualwords %}
         <span style="line-height: 1.3em;display:block;">&bull; {{ u }}</span>
         {% endfor %}
@@ -278,7 +278,7 @@ $(document).ready(function() {
     </p>
     <p style="width:45%;float:left;font-size:0.8em;margin-right:1%;"><strong>Analysis of your overall writing style</strong><br />
         {% for o in compareoverall %}
-        <span style="margin:5px;display:block">
+        <span style="margin:5px 0;display:block">
       {{ o }}
       </span>
         {% endfor %}
@@ -291,7 +291,7 @@ $(document).ready(function() {
         <textarea id="repeatdoc" style="display:none;">
 {{ repeatdoc }}
   </textarea>
-        <h2>Try again?</h2>
+        <h2>Revise your message</h2>
         <div class="tabs">
             <div class="tab">
                 <input type="radio" id="tab-1" name="whichmessage" value="choosesuggestmessage" checked>
@@ -313,7 +313,7 @@ $(document).ready(function() {
                         <div id="textdisplaysuggestions">
                             Click an underlined word to choose from synonym replacements.
                         </div>
-                        <span><em>Click a synonym to auto-replace an underlined word.</em></span>
+                        <span style="font-size: 0.8em;margin-top:5px;"><em>Click a synonym to auto-replace an underlined word.</em></span>
                     </div>
                     <textarea id="suggestmessagebox" name="suggestmessage" style="display: none"></textarea>
                 </div>
