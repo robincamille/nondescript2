@@ -10,8 +10,8 @@ from sources import topcorpuswords1000
 with open(topcorpuswords1000) as vocdoc:
      voc = [w[:-1] for w in vocdoc.readlines()]
 
-def tfidf(docs):
-    '''tfidfer(documentList) -> converts collection of documents to tf matrix'''
+def tf(docs):
+    '''tf(documentList) -> converts collection of documents to tf matrix'''
     tfidfer = TfidfVectorizer(vocabulary=voc, \
                               min_df=1, \
                               stop_words=None, \

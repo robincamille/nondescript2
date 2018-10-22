@@ -15,7 +15,8 @@ from uniquefeatures import avgwordlength, avgsentlength
 from cosinesim import sim
 from nondescript import changewords
 from random import randint
-from classifactory import classifydocs
+from buildclassifier import classifydocs
+from nltk import word_tokenize as tok
 from sources import *
 
 app = Flask(__name__)
@@ -43,20 +44,15 @@ def my_form_post():
         message = request.form['origmessage']
         
     docraw = corpus + ' ' + message #Analyze writing overall 
-    doc = docraw.split()
+    #doc = docraw.split()
+    doc = tok(docraw)
     printcompare = [] #things to print: style vs. all background documents
     printoverall = [] #things to print: overall style
+    printunusualwords = []
+    unusualwordsonly = []
     printclassify = [] #things to print: classifier output
     advice = [] #tips such as use shorter sentences
 
-
-    #Set up word frequency comparison
-    with open(bcfreqs) as infile:
-        allfreqraw = [l for l in infile]
-    allfreq = {}
-    for row in allfreqraw:
-        row = row.split(',')
-        allfreq[row[0][:-1]] = float(row[1])
     
     #Document length
     #s.append('Document length: %d words' % len(doc))
@@ -90,7 +86,6 @@ def my_form_post():
         everyone else's average.".format(word_compare))
 
     #Average sent lengths
-
     printcompare.append("Your message's sentence length is {:.2f}x \
         your average".format(avgsentlength(message)/avgsentlength(corpus)))
     #totslavg = mean(totsl)
@@ -104,7 +99,21 @@ def my_form_post():
     
     advice.append("Focus on changing the red-underlined words.")
 
+
+
     #Top unusual words
+    
+    #Set up word frequency comparison
+    with open(bcfreqs) as infile: #from sources.py
+        allfreqraw = [l[1:] for l in infile]
+    allfreq = {}
+    for row in allfreqraw:
+        row = row.split(',')
+        allfreq[row[0][:-1]] = float(row[1])
+
+    # with open('allfreq.csv','w') as allfreqfile:
+    # 	allfreqfile.write(str(allfreq))
+
     doccount = defaultdict(int)
     docfreq = defaultdict(int)
 
@@ -114,48 +123,60 @@ def my_form_post():
     for word in doccount: 
         docfreq[word] = doccount[word] / float(len(doccount)) #term frequency
 
-    #Compare to 7 random authors in background corpus
+    # with open('docfreq.csv','w') as docfreqfile:
+    # 	docfreqfile.write(str(docfreq))
+
+    #Compare word frequencies
+    compfreq = defaultdict(list)
+    for word in docfreq:
+        if word in allfreq.keys():
+            compfreq[word] = [docfreq[word],allfreq[word]]
+        else:
+            pass
+
+    compwords = []
+    for word in compfreq:
+        if doccount[word] > 1:
+            if compfreq[word][0] > compfreq[word][1]:
+                # if compfreq[word][1] == 0:
+                #     v = compfreq[word][1] / minfreq #min freq from train/
+                # else:
+                v = compfreq[word][0] / float(compfreq[word][1])
+                compwords.append([v, word, doccount[word]]) #currently 0 words? fix this
+            else:
+                pass
+        else:
+            pass
+
+    printoverall.append('Five most unusual words overall, compared with an average document:')
+    compwordssort = sorted(compwords,reverse=True)
+    
+    for i in compwordssort[:5]:
+    	unusualwordsonly.append(i[1])
+        printunusualwords.append('%15s %4.2fx more frequent (used %d times)' % (i[1],i[0],i[2]))
+
+
+
+    # The important bit: 
+
+    #Compare to n random authors in background corpus
     #Run through classifier: train & test
     #backgroundcorpus directory & filelist .txt file specified
     #in sources.py
-    printclassify = [i for i in classifydocs(backgroundcorpus,\
+    classifieroutcome = [i for i in classifydocs(backgroundcorpus,\
                                              filelist,\
                                              docraw,\
                                              message,\
-                                             5000)] #vocab of n words
+                                             1000)] #vocab of n words
 
 
-    #Compare word frequencies -- currently does not work
-    # compfreq = defaultdict(list)
-    # for word in docfreq:
-    #     if word in allfreq.keys():
-    #         compfreq[word] = [docfreq[word],allfreq[word]]
-    #     else:
-    #         pass
 
-    # compwords = []
-    # for word in compfreq:
-    #     if doccount[word] > 1:
-    #         if compfreq[word][0] > compfreq[word][1]:
-    #             if compfreq[word][1] == 0:
-    #                 v = compfreq[word][1] / minfreq #min freq from train/
-    #             else:
-    #                 v = compfreq[word][0] / float(compfreq[word][1])
-    #             compwords.append([v, word, doccount[word]]) #currently 0 words? fix this
-    #         else:
-    #             pass
-    #     else:
-    #         pass
-
-    # printoverall.append('Five most unusual words overall, compared with an average document:')
-    # compwordssort = sorted(compwords,reverse=True)
-    
-    # for i in compwordssort[:5]:
-    #     printoverall.append('%15s %4.2fx more frequent (used %d times)' % (i[1],i[0],i[2]))
 
     #Output to send to compare-output-simple.html
     return render_template("compare-output-simple.html", \
                            compareoverall = printoverall, \
+                           # unusualwordsonly = unusualwordsonly, \
+                           unusualwords = printunusualwords, \
                            advice = advice, \
                            corpus = corpus, \
                            repeatdoc = message, \
@@ -163,7 +184,8 @@ def my_form_post():
                            luckydoc = luckymessage, \
                            origdoc = origmessage, \
                            comparestats = printcompare, \
-                           classifystats = printclassify)
+                           classifieroutcome = classifieroutcome[0], \
+                           classifierscore = classifieroutcome[1])
 
 # About page
 @app.route('/about')

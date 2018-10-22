@@ -16,7 +16,7 @@ from  more_itertools import chunked
 from sklearn.naive_bayes import GaussianNB
 from sklearn.externals import joblib
 from random import randint
-from classif import tfidf
+from buildtf import tf
 
 timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('_%Y-%m-%d_%H-%M-%S')
 
@@ -25,7 +25,7 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     compared to another document by the same author, and 2 documents each from 7
     randomly chosen authors in the given directory. tf arrays created for (topnum)
     characters: 100, 1000, 10000 of the most common English words."""
-    printclassify = []
+    #classifieroutcome = []
     otherauths = []
     comparedocs = []
     comparedocstest = []
@@ -79,8 +79,8 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     comparedocstest.append(toponly.top(messagetext,topnum))
 
     # Set up term frequency arrays for train and test document sets
-    tfarraytrain = tfidf(comparedocs).toarray()
-    tfarraytest = tfidf(comparedocstest).toarray()
+    tfarraytrain = tf(comparedocs).toarray()
+    tfarraytest = tf(comparedocstest).toarray()
 
     # Set up classifier 
     gnb = GaussianNB()
@@ -98,9 +98,9 @@ def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     scoretest =  "{:.1f}".format(scoretest)
     print "Testing predictions\t" + str(predstest) + "\t(user is last 2 targets)\tScore: " + str(scoretest)  # To console only
     if predstest[-1] == anontarget:
-        printclassify.append("Try again: Message is still attributed to you by this classifier.")
+        classifieroutcome = "Try again: Message is still attributed to you by this classifier."
     else:
-        printclassify.append("Success: Message successfully anonymized for this classifier.")
-    printclassify.append("Overall classifier score: " + str(scoretest) + ' out of 100')
+        classifieroutcome = "Success: Message successfully anonymized for this classifier."
+    classifierscore = "Overall classifier score: " + str(scoretest) + ' out of 100'
 
-    return printclassify
+    return classifieroutcome, classifierscore
