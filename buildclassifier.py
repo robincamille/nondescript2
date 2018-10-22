@@ -11,14 +11,14 @@
 # anonymity.
 
 
-import toponly, datetime, time, re
+import toponly, re
 from  more_itertools import chunked
 from sklearn.naive_bayes import GaussianNB
 from sklearn.externals import joblib
 from random import randint
 from buildtf import tf
 
-timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('_%Y-%m-%d_%H-%M-%S')
+
 
 def classifydocs(listdir, authsfile, sampletext, messagetext, topnum = 999):
     """Naive Bayes classifier returns classification for a given document,
