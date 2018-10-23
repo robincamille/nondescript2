@@ -176,8 +176,15 @@ def my_form_post():
     
     for i in compwordssort[:10]:
     	unusualwordsonly.append(i[1])
-        printunusualwords.append('{}: {:.1f}x more frequent (used {} times in message)'.format(i[1],i[0],i[2]))
+        printunusualwords.append('{}: {:.1f}x more frequent (used {} times in sample and message)'.format(i[1],i[0],i[2]))
     unusualwordsonly = ' '.join(unusualwordsonly)
+
+    # !!!!!!!!!!!! FOR STUDY ONLY -- DELETE WHEN DONE !!!!!!!!!!!!# 
+    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('_%Y-%m-%d_%H-%M-%S')
+    with open("studydocs/user_unusual-words_" + timestamp + ".txt","wb") as unusualwordsdoc:
+    	for i in compwordssort:
+		    unusualwordsdoc.write('{}\t{:.1f}x more frequent\t(used {} times in sample and message)\n'.format(i[1],i[0],i[2])) #will make same new file each time, must clean out dupes
+	# ^^^^^^^^^^^^ FOR STUDY ONLY -- DELETE WHEN DONE ^^^^^^^^^^^^# 
 
 
     # The important bit: 
