@@ -36,17 +36,6 @@ def my_form_post():
     corpus = request.form['corpus']
 
 
-
-
-    # !!!!!!!!!!!! FOR STUDY ONLY -- DELETE WHEN DONE !!!!!!!!!!!!# 
-    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('_%Y-%m-%d_%H-%M-%S')
-    with open("studydocs/user_sample_" + timestamp + ".txt","wb") as outfilesample:
-	    outfilesample.write(corpus.encode('utf-8').strip()) #will make same new file each time, must clean out dupes
-	# ^^^^^^^^^^^^ FOR STUDY ONLY -- DELETE WHEN DONE ^^^^^^^^^^^^# 
-
-
-
-
     # Nondescript UI input page: right box, message
     # Output page: 3 tabs at the bottom
     if request.form['whichmessage'] == 'choosesuggestmessage':
@@ -56,16 +45,6 @@ def my_form_post():
     if request.form['whichmessage'] == 'chooseorigmessage':
         message = request.form['origmessage']
     
-
-
-
-    # !!!!!!!!!!!! FOR STUDY ONLY -- DELETE WHEN DONE !!!!!!!!!!!!# 
-    with open("studydocs/user_message_" + timestamp + ".txt","wb") as outfilemessage:
-	    outfilemessage.write(message.encode('utf-8').strip())
-	# ^^^^^^^^^^^^ FOR STUDY ONLY -- DELETE WHEN DONE ^^^^^^^^^^^^# 
-
-
-
 
     docraw = corpus + ' ' + message #Analyze writing overall 
     #doc = docraw.split()
@@ -179,12 +158,6 @@ def my_form_post():
         printunusualwords.append('{}: {:.1f}x more frequent (used {} times in sample and message)'.format(i[1],i[0],i[2]))
     unusualwordsonly = ' '.join(unusualwordsonly)
 
-    # !!!!!!!!!!!! FOR STUDY ONLY -- DELETE WHEN DONE !!!!!!!!!!!!# 
-    timestamp = datetime.datetime.fromtimestamp(time.time()).strftime('_%Y-%m-%d_%H-%M-%S')
-    with open("studydocs/user_unusual-words_" + timestamp + ".txt","wb") as unusualwordsdoc:
-    	for i in compwordssort:
-		    unusualwordsdoc.write('{}\t{:.1f}x more frequent\t(used {} times in sample and message)\n'.format(i[1],i[0],i[2])) #will make same new file each time, must clean out dupes
-	# ^^^^^^^^^^^^ FOR STUDY ONLY -- DELETE WHEN DONE ^^^^^^^^^^^^# 
 
 
     # The important bit: 
